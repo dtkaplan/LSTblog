@@ -2,57 +2,134 @@
   {
     "objectID": "about.html",
     "href": "about.html",
-    "title": "Lessons in Statistical Thinking: About this blog.",
+    "title": "About",
     "section": "",
-    "text": "The beta version of Lessons in Statistical Thinking (LST) was released in February 2024.\nLST is intended as a first statistics course but many of the topics are suitable for a second-statistics course as well. There are many innovations in LST. This blog has posts to orient new instructors both to the topics in LST and the software provided by the {LSTbook} R package."
-  },
-  {
-    "objectID": "posts/welcome/index.html",
-    "href": "posts/welcome/index.html",
-    "title": "Welcome To My Blog",
-    "section": "",
-    "text": "This is the first post in a Quarto blog. Welcome!\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
-  },
-  {
-    "objectID": "posts/post-with-code/index.html",
-    "href": "posts/post-with-code/index.html",
-    "title": "Post With Code",
-    "section": "",
-    "text": "This is a post with executable code."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "LSTblog",
-    "section": "",
-    "text": "I’m going to put a little content here, just to see what happens.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n{LSTbook} R package released on CRAN\n\n\n\n\n\n\nsoftware\n\n\n\n\n\n\n\n\n\nFeb 1, 2024\n\n\nDaniel Kaplan\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nJan 29, 2024\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items"
+    "text": "The beta version of Lessons in Statistical Thinking (LST) was released in February 2024.\nLST is intended as a first statistics course but many of the topics are suitable for a second-statistics course as well. There are many innovations in LST. This blog has posts to orient new instructors both to the topics in LST and the software provided by the {LSTbook} R package.\n\nBanner image: Detail from Paul Signac’s La Corne d’Or (1907)"
   },
   {
     "objectID": "posts/LSTbook-on-CRAN/index.html",
     "href": "posts/LSTbook-on-CRAN/index.html",
     "title": "{LSTbook} R package released on CRAN",
     "section": "",
-    "text": "After more than a year of development, the {LSTbook} R package has been released to CRAN, the official distribution site for R packages. You can browse through the package vignettes and documentation at package repository, and install {LSTbook} in the normal way:\ninstall.packages(\"LSTbook\")\nThe LST book contains many examples using data. Many of the data frames referenced in LST are provided by {LSTbook}. (Others are provided by mosaicData and other similar packages.)\nPerhaps more importantly, LST uses a very streamlined syntax for commands unified around the R pipe (|&gt;) and is designed to interoperate with tidy packages such as {dplyr}. Almost every R command used in LST has a consistent structure:\nThe noun is typically a data frame. The verbs are graphics and wrangling operations, model fitting, model summarizing, simulating with DAGs. {LSTbook} provides a handful of easy-to-use verbs that permit sophisticated computing with a simple syntax.\nAfter you’ve installed {LSTbook}, load it into your R session:\nlibrary(LSTbook)\nWe’ll illustrate the most commonly used R functions from {LSTbook} using the mosaicData::Galton data frame. This contains Francis Galton’s data from 1880s London on the height of fully-grown children and their parents."
+    "text": "After more than a year of development, the {LSTbook} R package has been released to CRAN, the official distribution site for R packages. You can browse through the package vignettes and documentation at package repository and see how the package is used in the book Lessons in Statistical Thinking."
   },
   {
-    "objectID": "posts/LSTbook-on-CRAN/index.html#graphics",
-    "href": "posts/LSTbook-on-CRAN/index.html#graphics",
-    "title": "{LSTbook} R package released on CRAN",
-    "section": "Graphics",
-    "text": "Graphics\nLST uses a single, standard graphics type: the annotated point plot. The virtue of standardizing graphics is that students know what they are looking at. For example, the axes are always variables and the layout of the point plot is described by a tilde-expression such as height ~ mother. Try out these examples:\n\nmosaicData::Galton |&gt; point_plot(height ~ sex)\n\n\n\n\n\n\n\nmosaicData::Galton |&gt; point_plot(height ~ mother)\n\n\n\n\n\n\n\nmosaicData::Galton |&gt; point_plot(height ~ mother + sex)\n\n\n\n\n\n\n\n\nGraphics with four variables are difficult for newbies to interpret, but they are easy to make with point_plot():\n\nmosaicData::Galton |&gt;\n  point_plot(height ~ mother + father + sex, annot = \"model\")\n\n\n\n\n\n\n\n\nThe annot = \"model\" argument instructs point_plot() to annotate the point plot with the model function corresponding to the tilde expression. I think the model is the only way to make sense of the 4-variable point plot, but annot = \"model\" applies to simpler plots as well."
+    "objectID": "posts/StatChat-10-2023/index.html",
+    "href": "posts/StatChat-10-2023/index.html",
+    "title": "A Model Statistics Course",
+    "section": "",
+    "text": "These are presentation notes for the October 2023 StatChat meeting. For more than 15 years, statistical educators in the Twin Cities region of Minnesota have been gathering a half-dozen times a year at StatChat to share comradeship and teaching insights. Among the schools regularly represented are the University of Minnesota, Macalester College, St. Olaf College, Hamline University, Augsburg University, Carleton College, St. Cloud State University, and Minnesota State University Mankato. The slides were slightly revised for a 2024-01-31 presentation “StatsChat” for high-school teachers in Wisconsin.\nAbstract: “Mere Renovation is Too Little Too Late: We Need to Rethink Our Undergraduate Curriculum from the Ground Up” is the title 2015 paper by George Cobb. Honoring George’s challenge, I have been rethinking and re-designing the introductory statistics course, replacing traditional foundations using modern materials and reconfiguring the living and working spaces to suit today’s applied statistical needs and projects. In the spirit of a “model house” used to demonstrate housing innovations, I’ll take you on a tour of my “model course,” whose materials are available free, open, and online. Among the features you’ll see: an accessible handling of causal reasoning, a unification of the course structure around modeling, a highly streamlined yet professional-quality computational platform, and an honest presentation of Hypothesis Testing that puts it in the framework of Bayesian reasoning."
   },
   {
-    "objectID": "posts/LSTbook-on-CRAN/index.html#model-training",
-    "href": "posts/LSTbook-on-CRAN/index.html#model-training",
-    "title": "{LSTbook} R package released on CRAN",
-    "section": "Model training",
-    "text": "Model training\nLST is oriented around regression modeling, both linear and logistic. This can be introduced gently with the point_plot(..., annot = \"model\") graphic, but it applies as well to more formal methods such as confidence intervals and prediction intervals. Picking up on the previous examples:\n\nmosaicData::Galton |&gt; model_train(height ~ mother) |&gt; conf_interval()\n\n# A tibble: 2 × 4\n  term          .lwr  .coef   .upr\n  &lt;chr&gt;        &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;\n1 (Intercept) 40.3   46.7   53.1  \n2 mother       0.213  0.313  0.413\n\nmosaicData::Galton |&gt; model_train(height ~ mother + father + sex) |&gt; R2()\n\n    n k  Rsquared        F     adjR2 p df.num df.denom\n1 898 3 0.6396752 529.0317 0.6384661 0      3      894\n\n\nTwo level categorical variables, such as sex in the mosaicData::Galton data, are easily converted to zero-one variables suitable for logistic regression. For instance:\n\nmosaicData::Galton |&gt; model_train(zero_one(sex, one = \"F\") ~ mother) |&gt;\n  conf_interval()\n\n# A tibble: 2 × 4\n  term           .lwr   .coef   .upr\n  &lt;chr&gt;         &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;\n1 (Intercept) -5.72   -2.06   1.59  \n2 mother      -0.0258  0.0310 0.0881"
+    "objectID": "posts/StatChat-10-2023/index.html#introductions",
+    "href": "posts/StatChat-10-2023/index.html#introductions",
+    "title": "A Model Statistics Course",
+    "section": "Introductions",
+    "text": "Introductions\n\nWhat is the most important take-away from your stats course?\nWhat subjects could be dropped without loss?\nAre there course topics that are misleading?\nAre there course topics that are out of date?"
   },
   {
-    "objectID": "posts/LSTbook-on-CRAN/index.html#data-simulations-and-repeated-trials",
-    "href": "posts/LSTbook-on-CRAN/index.html#data-simulations-and-repeated-trials",
-    "title": "{LSTbook} R package released on CRAN",
-    "section": "Data simulations and repeated trials",
-    "text": "Data simulations and repeated trials"
+    "objectID": "posts/StatChat-10-2023/index.html#motivation",
+    "href": "posts/StatChat-10-2023/index.html#motivation",
+    "title": "A Model Statistics Course",
+    "section": "Motivation",
+    "text": "Motivation\nThe “consensus” Stat 101 is 50 years out of date:\n\nfails to engage issues of causation, covariation, and adjustment\ntoo much emphasis on p-values\nentirely ignores Bayes\nno substantial coverage of risk, risk factors, …\nuses a confusing over-variety of graphic modes (many of which are out-of-date)\ndoesn’t make contact with data science, machine learning, and AI/GPT\n\nI’m happy to discuss the above points anytime, but that’s where I aimed this talk.\nMy objectives:\n\nDemonstrate the extent to which it’s possible to overcome these deficiencies with a complete, practicable, no-prerequisite course.\nProvide a complete course framework, avoiding topic bloat, to which other people can add their own exercises, topics, and examples.\n\nTo this end, there is now a completed draft textbook: Lessons in Statistical Thinking that is free, online.\n\n\n\n\n\n\nJeff Witmer’s approach\n\n\n\nJeff proposes 15 changes*, dividing them into amount-of-effort categories:\n\nChanges You Could Make with Little Effort or Planning. (e.g. “significant” -&gt; discernible)\nChanges to a Course That You Could Implement after Investing a Day or so of Planning. (e.g. emphasize power, not \\(\\alpha\\))\nChanges to a Course That Would Require Quite a Bit of Planning but That Are Worth Considering Nonetheless (e.g. emphasize effect size)\n\nJeff Witmer (2023) “What Should We Do Differently in STAT 101?” Journal of Statistics and Data Science Education link\nAlmost all of which are engaged in Lessons in Statistical Thinking"
+  },
+  {
+    "objectID": "posts/StatChat-10-2023/index.html#style",
+    "href": "posts/StatChat-10-2023/index.html#style",
+    "title": "A Model Statistics Course",
+    "section": "Style",
+    "text": "Style\n\nDemonstrate and describe statistical phenomena by causal simulation\n\nExamples:\n\nsampling variation\nconfounders, covariates, colliders, adjustment\n\nStat theory from simulation/wrangling rather than probability/algebra\n\nInformal inference from the very beginning, gradually formalizing it over the semester\nSingle, standard format for graphics: the annotated point plot.\n\nAnnotations for (i) distribution, and (ii) models, including multivariable models.\n\nKeep the software powerful, but simple.\n\nExample: a point plot of Francis Galton’s data on children’s heights versus their parents.\n\n\n\nGalton |&gt; point_plot(height ~ mother + sex)\n\n\n\n\n\n\n\n\n\nExample: The most frequently encountered command has this structure:\n\n\n    Galton |&gt; \n      model_train(height ~ mother + sex) |&gt;\n      conf_interval()\n\n# A tibble: 3 × 4\n  term          .lwr  .coef   .upr\n  &lt;chr&gt;        &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;\n1 (Intercept) 37.1   41.4   45.8  \n2 mother       0.286  0.353  0.421\n3 sexM         4.87   5.18   5.49"
+  },
+  {
+    "objectID": "posts/StatChat-10-2023/index.html#course-overview",
+    "href": "posts/StatChat-10-2023/index.html#course-overview",
+    "title": "A Model Statistics Course",
+    "section": "Course overview",
+    "text": "Course overview\n\nPart 1: Handling data\n\nData frames\nGraphics (data and models)\nWrangling\n\nPart 2: Describing relationships\n\nRegression (incl. categorical and multiple explanatory variables)\nAdjustment\n\nPart 3: Randomness and the unexplained\n\nSignal and noise\nSimulation and DAGs\nProbability models (optional)\nSampling variation and confidence intervals/bands\nLikelihood (optional, prep. for Part 5)\nMeasuring and accumulating risk\n\nPart 4: Causal reasoning\n\nEffect size\nDirected Acyclic Graphs (DAGs), or “influence diagrams”\nCausality/Confounding/Adjustment\nExperiment\n\nPart 5: Hypothetical thinking\n\nBasic Bayes: competing two hypotheses\nHypothesis testing"
+  },
+  {
+    "objectID": "posts/StatChat-10-2023/index.html#how-can-we-fit-more-in-an-already-crowded-course",
+    "href": "posts/StatChat-10-2023/index.html#how-can-we-fit-more-in-an-already-crowded-course",
+    "title": "A Model Statistics Course",
+    "section": "How can we fit more in an already crowded course?",
+    "text": "How can we fit more in an already crowded course?\nStreamline!\n\nReduce drag cognitive load.\n\nRepeated use a small number of standard forms\n\none basic graphical pattern: annotated point plot\none basic computational pattern: noun |&gt; verb |&gt; verb |&gt; …\n\nAvoid nomenclature conflicts with everyday words, e.g.\n\n“table” -&gt; data frame\n“case” -&gt; specimen\n“assignment” -&gt; storage\n\n\nUnify t, p into regression modeling, conf. interval/bands in both graphics and models\nKeep number of types of objects small: data frame, model, graphic, simulation\n\nVery small computational footprint, a dozen stat/graphics/wrangling functions.\n\nRemove square roots whenever that’s easy\n\nfocus on variance rather than standard deviation, R^2 rather than r"
+  },
+  {
+    "objectID": "posts/StatChat-10-2023/index.html#part-i-handling-data-6-7-class-hrs",
+    "href": "posts/StatChat-10-2023/index.html#part-i-handling-data-6-7-class-hrs",
+    "title": "A Model Statistics Course",
+    "section": "Part I: Handling Data (6-7 class hrs)",
+    "text": "Part I: Handling Data (6-7 class hrs)\n\nLesson 1. Data frames\nData is always in data frames.\n\nColumns: Variables\nRows: “Specimens” / Unit of observation\n\nComputing concepts:\n\nname of data frame, e.g. Galton or Nats\npipe\nfunction()\n\nUsually start with a named data frame, piping it to a function.\n\nNats |&gt; names()\n\n[1] \"country\" \"year\"    \"GDP\"     \"pop\"    \n\n\n\n\nLesson 2. Graphics\nBoth the horizontal and vertical axes are mapped to variables.\nJust one command: point_plot() produces point plot with automatic jittering as needed.\nTilde expression specifies which variable is mapped to y and x (and, optionally, color and faceting).\nGalton |&gt; point_plot(height ~ sex)\nGalton |&gt; point_plot(height ~ mother + father + sex)\n\n\n\n\n\n\n\n\n\n\n\n\nLesson 3. Empirical distributions\n\nGalton |&gt; point_plot(height ~ sex, annot = \"violin\")\n\n\n\n\n\n\n\n\n\n\nLesson 4. Models as graphical annotation\n\nGalton |&gt; sample_n(size=100) |&gt; \n  point_plot(height ~ sex, annot = \"model\", \n             point_ink = 0.1, model_ink=0.75)\n\n\n\n\n\n\n\nGalton |&gt; point_plot(height ~ mother + father + sex, \n                     annot = \"model\", \n                     point_ink = 0.1, model_ink=0.75)"
+  },
+  {
+    "objectID": "posts/StatChat-10-2023/index.html#lesson-5-wrangling",
+    "href": "posts/StatChat-10-2023/index.html#lesson-5-wrangling",
+    "title": "A Model Statistics Course",
+    "section": "Lesson 5: Wrangling",
+    "text": "Lesson 5: Wrangling\n[Perhaps use two class days]\nFive basic operations: mutate(), filter(), summarize(), select(), arrange()\n\nNats\n\n# A tibble: 8 × 4\n  country  year   GDP   pop\n  &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n1 Korea    2020   874    32\n2 Cuba     2020    80     7\n3 France   2020  1203    55\n4 India    2020  1100  1300\n5 Korea    1950   100    32\n6 Cuba     1950    60     8\n7 France   1950   250    40\n8 India    1950   300   700\n\n\n\nNats |&gt; filter(year == 2020)\n\n# A tibble: 4 × 4\n  country  year   GDP   pop\n  &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n1 Korea    2020   874    32\n2 Cuba     2020    80     7\n3 France   2020  1203    55\n4 India    2020  1100  1300\n\nNats |&gt; summarize(totalpop = sum(pop), .by=year)\n\n# A tibble: 2 × 2\n   year totalpop\n  &lt;dbl&gt;    &lt;dbl&gt;\n1  2020     1394\n2  1950      780"
+  },
+  {
+    "objectID": "posts/StatChat-10-2023/index.html#lesson-6-computing-recap",
+    "href": "posts/StatChat-10-2023/index.html#lesson-6-computing-recap",
+    "title": "A Model Statistics Course",
+    "section": "Lesson 6: Computing recap",
+    "text": "Lesson 6: Computing recap\n[Perhaps merged into a two-day wrangling unit with Lesson 5]\nPipes, functions, parentheses, arguments, …"
+  },
+  {
+    "objectID": "posts/StatChat-10-2023/index.html#lesson-7-databases",
+    "href": "posts/StatChat-10-2023/index.html#lesson-7-databases",
+    "title": "A Model Statistics Course",
+    "section": "Lesson 7: Databases",
+    "text": "Lesson 7: Databases\n[Entirely optional]\n\nJoins\nWhy we put related data into separate tables with different units of observation."
+  },
+  {
+    "objectID": "posts/StatChat-10-2023/index.html#part-ii-describing-relationships",
+    "href": "posts/StatChat-10-2023/index.html#part-ii-describing-relationships",
+    "title": "A Model Statistics Course",
+    "section": "Part II: Describing Relationships",
+    "text": "Part II: Describing Relationships\nConsistently use explanatory/response modeling paradigm. Introduce models with two or three explanatory variables early in the course.\nUse variance as measure of variation of a variable. (Ask me about the simple explanation of variance that doesn’t involve calculating a mean.)\nUse data wrangling to introduce model values, residuals, …\n\nmtcars |&gt; \n  mutate(mpg_mod = model_values(mpg ~ hp + wt)) |&gt; \n  select(hp, wt, mpg_mod) |&gt; \n  head()\n\n                   hp    wt  mpg_mod\nMazda RX4         110 2.620 23.57233\nMazda RX4 Wag     110 2.875 22.58348\nDatsun 710         93 2.320 25.27582\nHornet 4 Drive    110 3.215 21.26502\nHornet Sportabout 175 3.440 18.32727\nValiant           105 3.460 20.47382\n\n\nThen transition to model coefficients.\n\nmtcars |&gt;\n  model_train(mpg ~ hp + wt) |&gt;\n  conf_interval()\n\n# A tibble: 3 × 4\n  term           .lwr   .coef    .upr\n  &lt;chr&gt;         &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;\n1 (Intercept) 34.0    37.2    40.5   \n2 hp          -0.0502 -0.0318 -0.0133\n3 wt          -5.17   -3.88   -2.58  \n\n\nCoefficients are always shown in the context of a confidence interval, even if they don’t yet know the mechanism for generating such intervals.\nDemonstrate mechanism of “adjustment”: Evaluate model holding covariates constant."
+  },
+  {
+    "objectID": "posts/StatChat-10-2023/index.html#part-iii-randomness-and-noise",
+    "href": "posts/StatChat-10-2023/index.html#part-iii-randomness-and-noise",
+    "title": "A Model Statistics Course",
+    "section": "Part III: Randomness and noise",
+    "text": "Part III: Randomness and noise\n6-11 class hours, depending on how much spent with named probability distributions. (USAFA engineers want some practice with named distributions: normal, exponential, poisson, …)\n\nSignal and noise\n\n\nSimulations\nStudents construct simple simulations, using them to generate data.\n\nmysim &lt;- datasim_make(\n  x &lt;- rnorm(n),\n  y &lt;- 2 + 3*x + rnorm(n, sd=0.5)\n)\nmysim |&gt; sample(size=4)\n\n# A tibble: 5 × 2\n       x       y\n   &lt;dbl&gt;   &lt;dbl&gt;\n1  0.552  3.97  \n2 -0.675 -0.0812\n3  0.214  3.10  \n4  0.311  2.82  \n5  1.17   5.79  \n\n\n\n\nProbability models\nMostly using simulations.\n\n\nLikelihood\nEarly introduction of the concept of likelihood: probability of data given hypothesis/model.\n\nmain point: distinguish between p(model | data) and p(data | model)\nwe’ll use likelihood in last part of course.\n\n\n\nR2\n\n\nPrediction\n\nThe proper form for a prediction: a relative probability assigned to each possible outcome.\nThe prediction-interval shorthand for (a).\n\n\n\nSampling variation and confidence intervals\n\nRuns &lt;- mysim |&gt; \n  sample(n = 5) |&gt;\n  model_train(y ~ x) |&gt; \n  trials(10) \n\nWarning: The `tidy()` method for objects of class `model_object` is not maintained by the broom team, and is only supported through the `lm` tidier method. Please be cautious in interpreting and reporting broom output.\n\nThis warning is displayed once per session.\n\nRuns |&gt; select(.trial, term, estimate )\n\n   .trial        term estimate\n1       1 (Intercept)    1.659\n2       1           x    3.164\n3       2 (Intercept)    2.204\n4       2           x    2.950\n5       3 (Intercept)    2.055\n6       3           x    3.318\n7       4 (Intercept)    1.771\n8       4           x    3.141\n9       5 (Intercept)    2.156\n10      5           x    2.920\n11      6 (Intercept)    2.157\n12      6           x    3.324\n13      7 (Intercept)    2.091\n14      7           x    2.833\n15      8 (Intercept)    2.446\n16      8           x    2.794\n17      9 (Intercept)    1.892\n18      9           x    2.399\n19     10 (Intercept)    2.053\n20     10           x    2.694\n\nRuns |&gt; summarize(var(estimate), .by = term)\n\n         term var(estimate)\n1 (Intercept)       0.05117\n2           x       0.08504\n\n\nDemonstrate that variance scales as 1/n. \n\n\nRisk\n(2 or 3 day unit)\nDefinition of risk, risk factors, baseline risk, risk ratios, absolute change in risk.\nUse absolute change for decision making, but use risk ratios and odds ratios for calculations.\nRegression when response is a zero-one variable.\n\nWhickham |&gt; point_plot(outcome ~ smoker, annot=\"model\", \n                       model_ink = 1)\n\n\n\n\n\n\n\nWhickham |&gt; point_plot(outcome ~ age + smoker, annot=\"model\")"
+  },
+  {
+    "objectID": "posts/StatChat-10-2023/index.html#part-iv-causal-modeling",
+    "href": "posts/StatChat-10-2023/index.html#part-iv-causal-modeling",
+    "title": "A Model Statistics Course",
+    "section": "Part IV: Causal modeling",
+    "text": "Part IV: Causal modeling\n\nEffect size\nRatio of (change in output) to (change in input).\nPhysical units important.\n\n\nDAGs\nReading “influence diagrams”\n\n\n\n\n\n\n\n\n\n\n\nCausality\nconfounding, covariates, and adjustment\nChoosing covariates based on a DAG\n\n\nExperiment\nexperiment interpreted as re-wiring of DAGs: requires intervention"
+  },
+  {
+    "objectID": "posts/StatChat-10-2023/index.html#part-v-hypothetical-thinking",
+    "href": "posts/StatChat-10-2023/index.html#part-v-hypothetical-thinking",
+    "title": "A Model Statistics Course",
+    "section": "Part V: Hypothetical thinking",
+    "text": "Part V: Hypothetical thinking\n\nStrong emphasis on the idea of hypothesis.\n\nYour turn: Please define hypothesis.\n\nWhat we want: p(hypothesis | data)\nWhat we have: hypothesis |&gt; simulation |&gt; data summarized as a Likelihood.\nQuestion: How do we calculate what we want.\n\n\nBayes framework\n\nSetting: medical screening. Test result + or -.\nWe put two hypotheses into competition based on the test result.\nLikelihoods we can measure from data:\n\np(+ | Sick) aka “sensitivity”\np(+ | Healthy) aka “false-positive rate” translated to “specificity”\n\nSetting: prevalence(Sick)\nCalculation\n\nGraphically\nAlgebra from the graph\nFormula in Likelihood-ratio form\n\n\n\\[odds(Sick|+) = \\frac{p(+ | Sick)}{p(+ | Healthy)} \\ odds(prevalence)\\]\n\n\nNull hypothesis testing\nNull is “Healthy.”\nWe have no claim about \\(prevalence\\).\nIf we have no claim about \\(p(+ | Sick)\\), we are more inclined to conclude \\(Sick\\) if \\(p(+ | Healthy)\\) is small.\n\n\\(p(+ | Healthy)\\) is p-value.\n\n\n\nNeyman-Pearson\nNull is “Healthy.” Alternative is “Sick”.\nWe have no claim about \\(prevalence\\), but we have the ability to estimate \\(p(+ | Sick)\\).\nInclined to conclude \\(Sick\\) if \\(p(+ | Healthy)\\) is small (like HNT) and \\(p(+ | Sick)\\) is small. \\(p(+ | Sick)\\) is the power of the test.\n\n\nGotcha’s in HT\n\nWithout power, can’t say what constitutes a big p-value.\nEstimation of p suffers greatly from sampling variation. No good reason to think that p &lt; 0.01 is any different from p &lt; 0.05.\nSensible decisions require knowledge of prevalence.\nEffect size, not p-value, is needed to interpret practical importance of results."
+  },
+  {
+    "objectID": "posts/StatChat-10-2023/index.html#objects-and-operations",
+    "href": "posts/StatChat-10-2023/index.html#objects-and-operations",
+    "title": "A Model Statistics Course",
+    "section": "Objects and operations",
+    "text": "Objects and operations\n\nData frame\nData graphics (as distinct from “infographics”)\nStatistical model\nSimulation\n\nOperations for all students\n\nData wrangling (simplified)\nAnnotated point plot of variables from a data frame\nModel training\nModel summarization\n\nOperations used in demonstrations (and suited to some students)\n\nSimulation (in demonstrations)\nIteration and accumulation (in demonstrations)\n\nComputations on variables are always inside the arguments of a function taking a data frame as an input.\nTilde expressions for models and graphics."
+  },
+  {
+    "objectID": "posts/StatChat-10-2023/index.html#resources",
+    "href": "posts/StatChat-10-2023/index.html#resources",
+    "title": "A Model Statistics Course",
+    "section": "Resources",
+    "text": "Resources\n\nTextbook: Statistical Inference via Data Science by Chester Ismay and Albert Y. Kim\nTextbook: Lessons in Statistical Thinking by Danny Kaplan\n\nAssociated R package: {LST}\n\nUSAFA Math 300Z course outline, instructor notes, etc.\nJeff Witmer (2023) “What Should We Do Differently in STAT 101?” Journal of Statistics and Data Science Education link"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Instructor Blog for *Lessons in Statistical Thinking*",
+    "section": "",
+    "text": "{LSTbook} R package released on CRAN\n\n\n\n\n\n\nsoftware\n\n\n\n\n\n\n\n\n\nFeb 1, 2024\n\n\nDaniel Kaplan\n\n\n\n\n\n\n\n\n\n\n\n\nA Model Statistics Course\n\n\n\n\n\n\npresentation\n\n\noverview\n\n\n\n\n\n\n\n\n\nJan 31, 2024\n\n\nDaniel Kaplan\n\n\n\n\n\n\nNo matching items"
   }
 ]

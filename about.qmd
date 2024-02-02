@@ -1,6 +1,6 @@
 ---
-title: "Lessons in Statistical Thinking: About this blog."
-image: profile.jpg
+title: "About"
+image: img/signac-thumbnail.jpg
 about:
   template: jolla
   links:
@@ -13,3 +13,7 @@ about:
 The beta version of [*Lessons in Statistical Thinking* (LST)](dtkaplan.github.io/Lessons-in-statistical-thinking) was released in February 2024.
 
 LST is intended as a first statistics course but many of the topics are suitable for a second-statistics course as well. There are many innovations in LST. This blog has posts to orient new instructors both to the topics in LST and the software provided by the `{LSTbook}` R package.
+
+-------
+
+Banner image: Detail from Paul Signac's *La Corne d'Or* (1907)
