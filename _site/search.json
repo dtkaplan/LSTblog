@@ -1,0 +1,58 @@
+[
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "Lessons in Statistical Thinking: About this blog.",
+    "section": "",
+    "text": "The beta version of Lessons in Statistical Thinking (LST) was released in February 2024.\nLST is intended as a first statistics course but many of the topics are suitable for a second-statistics course as well. There are many innovations in LST. This blog has posts to orient new instructors both to the topics in LST and the software provided by the {LSTbook} R package."
+  },
+  {
+    "objectID": "posts/welcome/index.html",
+    "href": "posts/welcome/index.html",
+    "title": "Welcome To My Blog",
+    "section": "",
+    "text": "This is the first post in a Quarto blog. Welcome!\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
+  },
+  {
+    "objectID": "posts/post-with-code/index.html",
+    "href": "posts/post-with-code/index.html",
+    "title": "Post With Code",
+    "section": "",
+    "text": "This is a post with executable code."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "LSTblog",
+    "section": "",
+    "text": "I’m going to put a little content here, just to see what happens.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n{LSTbook} R package released on CRAN\n\n\n\n\n\n\nsoftware\n\n\n\n\n\n\n\n\n\nFeb 1, 2024\n\n\nDaniel Kaplan\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nJan 29, 2024\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/LSTbook-on-CRAN/index.html",
+    "href": "posts/LSTbook-on-CRAN/index.html",
+    "title": "{LSTbook} R package released on CRAN",
+    "section": "",
+    "text": "After more than a year of development, the {LSTbook} R package has been released to CRAN, the official distribution site for R packages. You can browse through the package vignettes and documentation at package repository, and install {LSTbook} in the normal way:\ninstall.packages(\"LSTbook\")\nThe LST book contains many examples using data. Many of the data frames referenced in LST are provided by {LSTbook}. (Others are provided by mosaicData and other similar packages.)\nPerhaps more importantly, LST uses a very streamlined syntax for commands unified around the R pipe (|&gt;) and is designed to interoperate with tidy packages such as {dplyr}. Almost every R command used in LST has a consistent structure:\nThe noun is typically a data frame. The verbs are graphics and wrangling operations, model fitting, model summarizing, simulating with DAGs. {LSTbook} provides a handful of easy-to-use verbs that permit sophisticated computing with a simple syntax.\nAfter you’ve installed {LSTbook}, load it into your R session:\nlibrary(LSTbook)\nWe’ll illustrate the most commonly used R functions from {LSTbook} using the mosaicData::Galton data frame. This contains Francis Galton’s data from 1880s London on the height of fully-grown children and their parents."
+  },
+  {
+    "objectID": "posts/LSTbook-on-CRAN/index.html#graphics",
+    "href": "posts/LSTbook-on-CRAN/index.html#graphics",
+    "title": "{LSTbook} R package released on CRAN",
+    "section": "Graphics",
+    "text": "Graphics\nLST uses a single, standard graphics type: the annotated point plot. The virtue of standardizing graphics is that students know what they are looking at. For example, the axes are always variables and the layout of the point plot is described by a tilde-expression such as height ~ mother. Try out these examples:\n\nmosaicData::Galton |&gt; point_plot(height ~ sex)\n\n\n\n\n\n\n\nmosaicData::Galton |&gt; point_plot(height ~ mother)\n\n\n\n\n\n\n\nmosaicData::Galton |&gt; point_plot(height ~ mother + sex)\n\n\n\n\n\n\n\n\nGraphics with four variables are difficult for newbies to interpret, but they are easy to make with point_plot():\n\nmosaicData::Galton |&gt;\n  point_plot(height ~ mother + father + sex, annot = \"model\")\n\n\n\n\n\n\n\n\nThe annot = \"model\" argument instructs point_plot() to annotate the point plot with the model function corresponding to the tilde expression. I think the model is the only way to make sense of the 4-variable point plot, but annot = \"model\" applies to simpler plots as well."
+  },
+  {
+    "objectID": "posts/LSTbook-on-CRAN/index.html#model-training",
+    "href": "posts/LSTbook-on-CRAN/index.html#model-training",
+    "title": "{LSTbook} R package released on CRAN",
+    "section": "Model training",
+    "text": "Model training\nLST is oriented around regression modeling, both linear and logistic. This can be introduced gently with the point_plot(..., annot = \"model\") graphic, but it applies as well to more formal methods such as confidence intervals and prediction intervals. Picking up on the previous examples:\n\nmosaicData::Galton |&gt; model_train(height ~ mother) |&gt; conf_interval()\n\n# A tibble: 2 × 4\n  term          .lwr  .coef   .upr\n  &lt;chr&gt;        &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;\n1 (Intercept) 40.3   46.7   53.1  \n2 mother       0.213  0.313  0.413\n\nmosaicData::Galton |&gt; model_train(height ~ mother + father + sex) |&gt; R2()\n\n    n k  Rsquared        F     adjR2 p df.num df.denom\n1 898 3 0.6396752 529.0317 0.6384661 0      3      894\n\n\nTwo level categorical variables, such as sex in the mosaicData::Galton data, are easily converted to zero-one variables suitable for logistic regression. For instance:\n\nmosaicData::Galton |&gt; model_train(zero_one(sex, one = \"F\") ~ mother) |&gt;\n  conf_interval()\n\n# A tibble: 2 × 4\n  term           .lwr   .coef   .upr\n  &lt;chr&gt;         &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;\n1 (Intercept) -5.72   -2.06   1.59  \n2 mother      -0.0258  0.0310 0.0881"
+  },
+  {
+    "objectID": "posts/LSTbook-on-CRAN/index.html#data-simulations-and-repeated-trials",
+    "href": "posts/LSTbook-on-CRAN/index.html#data-simulations-and-repeated-trials",
+    "title": "{LSTbook} R package released on CRAN",
+    "section": "Data simulations and repeated trials",
+    "text": "Data simulations and repeated trials"
+  }
+]

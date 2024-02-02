@@ -1,0 +1,17 @@
+{
+  "posts/post-with-code/index.qmd": {
+    "index.html": "34cb0ad8"
+  },
+  "posts/welcome/index.qmd": {
+    "index.html": "3ee440c8"
+  },
+  "index.qmd": {
+    "index.html": "16d48a73"
+  },
+  "about.qmd": {
+    "about.html": "6869dbf6"
+  },
+  "posts/LSTbook-on-CRAN/index.qmd": {
+    "index.html": "0cacfde1"
+  }
+}
