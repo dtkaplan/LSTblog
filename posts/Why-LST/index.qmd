@@ -1,0 +1,100 @@
+---
+title: "Reforming Stat 101 with *Lessons in Statistical Thinking*"
+author: "Daniel Kaplan"
+date: "2024-02-28"
+categories: []
+---
+
+```{r include=FALSE}
+library(LSTbook)
+```
+
+[*Lessons in Statistical Thinking* (LST)](https://dtkaplan.github.io/Lessons-in-statistical-thinking/) is a new text for helping college-level students understand, read, and work with applied statistics as it is practiced today. It is part of a broader project that aims to reform the Stat 101 course so widely taught as the college-level introduction to statistics. Some readers will already be aware of the need for reform; a short case is made in @sec-reform-case.
+
+A process of winnowing out topics is central to reforming Stat 101. Instructors often claim that Stat 101 is already overcrowded, leaving no room for additional content reflecting today's applied statistics practice. Common sense suggests cleaning out low-importance topics. A small set of examples of such topics were given in the [ASA 2016 College GAISE report](https://www.amstat.org/asa/files/pdfs/GAISE/GaiseCollege_Full.pdf) in the section titled "Suggestions for topics that might be omitted from introductory statistics courses."
+
+*LST* is the product of a more stringent process to identify a small set of essential topics. Rather than starting with the topics already found in Stat 101, I considered broad areas of "applied statistics as it is practiced today." Two examples are causal reasoning and Bayesian inference. I worked backward from these aspirational topics to the foundations needed to support them. For instance, a basic part of causal reasoning is adjustment for covariates. Both "adjustment" and "covariates" need to build on foundations. And so on.
+
+Similarly, techniques such as data wrangling are an important component of today's applied statistics practice. In forming *LST*, I looked for a minimal set of foundations for a creditable introduction to data wrangling. These include an ability to compute and the relational operations used in wrangling. But once it is accepted that readers of *LST* will develop meaningful (if basic) skills in data wrangling it becomes possible to use these skills as part of the exposition of statistics itself. 
+
+One advantage of treating causality in depth is reflected in an approach taken in *LST* to present statistical theory. For instance, statistical thinking involves an important distinction between accuracy and precision. Stat 101 emphasizes precision; the extensive coverage of confidence intervals is an example. But Stat 101 says little about accuracy beyond "take a random sample." Yet even news reports of applied statistical work routinely include phrases like "after adjusting for ...."
+
+*LST* can draw on causal inference concepts such as causal networks and directed acyclic graphs (DAGs) when illustrating accuracy. With a causal network, the student can see the mechanics exactly. Drawing simulation data from the causal network enables a demonstration of covariates and confounding and what methods, such as adjustment for covariates, can and can't contribute to accuracy. 
+
+## Streamlining explanations
+
+In addition to minimizing the topic set needed to reach high-level objectives, *LST* reconsiders the path of introducing statistical basics. To take an example, consider "standard deviation." Typically, the Stat 101 lead-up to standard deviation starts with "distributions" and the graphical modes for displaying distributions. One of these is the histogram, which then gets smoothed into a continuous density picture of the normal distribution. Then the graphical features of this picture such as the location of the peak and the width of the bell-shaped mountain are associated with statistical word: mean and standard deviation. It's natural from there to discuss how much of the normal distribution is contained within $\pm 1$ or $\pm$ 2 standard deviations of the peak.
+
+In *LST*, the path to "standard deviation" is set by reference to a high-level objective: recognizing variation. It's easy to see variation in a data frame: the differing values of a variable from row to row. But how do you quantify the "amount" of variation? The standard measure of variation in *LST* is the variance. But there is no need to invoke the normal distribution to understand variance, nor to build it up as the square of the standard deviation. Instead, the explanation of variance starts with a simple question: Given two values of a variable, by how much do they vary? One nice answer is to take the difference in values and then square.
+
+What about the amount of variation in three values of a variable? Generalize the above square difference by calculating the square difference between every pair of the three values. There are three such square differences, so take the average as the measure of variation. A similar process can be followed to measure the variation in any number of values.
+
+The result of this simple process has a name that dates from very early in statistics: 1885. More important for us today is that the result is precisely twice the variance. So divide the average of square pairwise differences by two and you have the variance. There's no need to refer to the mean or the shape of the normal distribution. Just a common sense average of differences, the only part of which a student will ask for a justification is the squaring.
+
+I think there are cognitive advantages to emphasizing variance rather than standard deviation. Among these are the physical units of a variance: the square of the units of the variable itself. This helps to emphasize that variation in a quantity is a different kind of thing than the quantity itself. More important is the savings that come from not needing to introduce the normal distribution early in the course.
+
+A more important conceptual streamlining in *LST* involves unifying the various statistical tests in Stat 101 around a single method: regression modeling. The idea of "response" and "explanatory" variables is presented as early as Lesson 2. The Stat 101 distinction between means and proportions---the objects of t- and p-tests respectively---is not at all central. Both t- and p- fit into the framework of regression. In particular, both are instances where there is a single explanatory variable that is categorical. 
+
+Similarly, there is no need to emphasize a distinction between so-called one-sample and two-sample settings; both fit nicely into the regression framework. There is a cognitive and motivational gain, I think, in starting with describing relationships between two (or more) variables. The one-sample setting can be handled later as corresponding to an explanatory variable with no variation.
+
+*LST* also streamlines statistical graphics. There is just one fundamental form of data graphic: the annotated point plot. Each point itself refers to a single row of a data frame. In contrast, the annotations refer to the collective properties of the rows. Two types of annotations are available: a "violin" to display density, and a "model" to display trends. From the very start, the model annotations incorporate the uncertainty due to sampling variation. When confidence intervals are introduced in later lessons, the student already has an image of the uncertainty that they quantify. p-values appear only in the last lesson, placed there because (1) a statistically literate person needs to know what they are about, but (2) taking seriously how the 2016 [ASA Statement on p-values](https://www.amstat.org/asa/files/pdfs/p-valuestatement.pdf) points to the emphasis on p-values as unfortunate. In any event, students encounter hypothesis testing informally at a much earlier point, checking whether confidence intervals include zero when assessing whether a relationship has been detected or not.
+
+Computing in *LST* uses R, but the commands are designed around a minimal notation set and aim to be readable, pithy, and easy to emulate. There are no dollar signs, no square or curly braces. The built-in R pipe notation is used systematically to construct commands, and the outputs of modeling summaries are always data frames, hence amenable to the wrangling procedures covered early in *LST*. Concise modeling and graphics commands, available from the `{LSTbook}` package on CRAN,  follow similar syntactical patterns. For instance, here is a command for a graphical presentation of a model:
+
+```{r}
+Penguins |> 
+  point_plot(bill_length ~ mass + sex + species, annot = "model")
+```
+
+The above command is very similar to a command to generate a quantitative presentation of a model:
+
+```{r}
+Penguins |>
+  model_train(bill_length ~ mass + sex + species) |>
+  conf_interval()
+```
+
+## The broader *LST* project
+
+My primary goal with *LST* is to help students and instructors engage with "applied statistics as it is practiced today." The *Lessons in Statistical Thinking* text was written as a demonstration of the extent to which this goal can be met with a one-semester, no-prerequisite course. 
+
+More fundamentally, *LST* embraces what I see as a coherent, connected, and minimal set of topics needed to achieve the goal. Necessarily, not all important topics can be covered in a one-semester, no-prerequisite course. Notable omissions include time series, non-parametrics, and experimental design, among many others. Also omitted, inevitably, are topics that individual instructors think central to how they conceive of statistics, or beautiful in their own right, or addressing specific important applied contexts.
+
+I encourage the instructor to think of *LST* as a starting point in an ongoing conversation about what topics should be central to the college-level statistics curriculum. And I propose a test for such centrality. Suppose your students had a realistic mastery of the *LST* topics at a level that might be expected in a one-semester course. Would such students be in a good position to learn topics outside of *LST* that the instructor individually thinks of as important? For instance, if you teach a course on Bayesian inference or on causal inference, would the background provided by *LST* be superior to the background gained in a conventional Stat 101 course? 
+
+Or, consider any topic or example context you consider essential to a creditable introduction to statistics. Could you adequately address that topic or context using the methods and concepts already in *LST* as a foundation?
+
+Insofar as the answers to the previous questions are yes, the topics in *LST* might be considered a standard pre-requisite for students entering into more advanced study. It would be valuable to have a better standard than what we use now to express prerequisites, e.g., "a course in statistics at the AP level."
+
+Is *LST* suitable to serve as such a standard? The project is currently the product of one person, albeit one who participates actively in the community discussing change in Stat 101. Perhaps if I could think more clearly about the cognitive foundations of applied statistics, there would be additional topics to add to the standard. And there are likely topics that reflect my idiosyncratic interests and the particular applications of statistics that I have encountered in my career but are not important to a broad community.
+
+*LST* is a free, online, open-source text. I think it can serve as a framework to support the ideas of a broader community of statistics authors. I am open to any mode of publishing material and acknowledging authorship that can sustain and advance the project. If it helps, I do not need to be considered the primary author. (Perhaps it would be worthwhile to adopt a system such as the [Bourbaki pseudonym](https://en.wikipedia.org/wiki/Nicolas_Bourbaki) for collective authorship that was active in the first half of the 20th century.) If an author believes that worthwhile extensions require participation of a commercial entity, I'm happy for my contributions to *LST* to be used appropriately by that entity. Similarly, if a potential author needs help in order to frame her ideas in a way compatible with *LST*, I am available to provide such help.
+
+Another aspect of the broader project is addressing the limited preparedness of many current statistics instructors. I suspect many instructors will be unfamiliar with important topics in *LST*. This is likely because a substantial part of the introductory statistics professorship learned statistics by repeatedly teaching Stat 101.
+
+How best to bring such instructors on board while acknowledging the realities of limited time and lack of support from their home institution? (And many teachers of Stat 101, particularly adjuncts, don't even have a clear home institution that accepts a responsibility for ensuring continuing professional development.) My experience is that seminars and webinars are only minimally effective at helping instructors make a change in their teaching. Short courses at professional meetings are little better. Still, participants in such courses quickly saturate their ability to assimilate new information and, more damagingly, have no way to deal with the academic politics that so often stands in the way of innovation.
+
+Better alternatives might be a two-hour per week, semester-long walk-through of the topics, done primarily in discussion format and then transformed into an asynchronous web resource. Short courses are more likely to be successful if the people involved can shape institutional decisions. In very small programs, one or two instructors may control the curriculum. With larger programs, the short course is best provided at the initiative of administrative leaders and department chairs and involves a large fraction of the statistics faculty as well as representatives of allied disciplines that require statistics of their students.
+
+Please let me know if you might be interested in collaborating on the broad project as a potential author of extensions or as a leader or participant in outreach efforts. I'm also interested in hearing from colleagues who see *LST* as missing potential opportunities or who have ideas for further streamlining topics.
+
+
+## A case for reforming Stat 101 {#sec-reform-case}
+
+A reasonable outsider might presume that orienting students to "applied statistics as it is practiced today" is the purpose of the "Stat 101" courses that are ubiquitous in colleges and universities. There are already many textbooks for Stat 101, some of which have been refined over 10 to 30 years of successive editions. These books employ a variety of pedagogical approaches and use different examples, but they are mainly similar in the set of topics covered, a canonical set recognizable to all instructors teaching Stat 101.
+
+Regrettably, the canonical Stat 101 topics are not strongly oriented to "applied statistics as it is practiced today." Instead, the topics cover mainly techniques and theory from the early 20th century with a handful of additions from as recently as 1980. To the typical Stat 101 instructor, often trained in mathematics, the focus on historically early topics makes sense; that is the orientation of other components of the math curriculum such as algebra and calculus.
+
+I have asked many mathematics instructors what parts of the algebra, calculus, and trigonometry curriculum reflect developments in the last century. The typical response is that the question is irrelevant; those topics were fully developed long ago.
+
+However, applied statisticians, when asked what techniques they have used that are new in the last 50 years, can construct a long list. This will include machine learning, causal inference, renewed interest in Bayesian inference, logistic regression, statistical computing, data wrangling, bootstrapping, new types of graphics, and so on. 
+
+Stat 101 fails to address these topics. It even fails to address statistical techniques that are ubiquitous in applied work, such as adjustment for covariates. There are a variety of explanations for this failure. The course is already too crowded and the textbooks too thick; there's no space for additional topics. Or, students are not ready to handle such "advanced" topics. Or, these topics often involve "black box" computing, but our goal is to understand the basic ideas underlying statistics. Or even, Bayesian and causal inference are not broadly accepted as legitimate statistical methods.
+
+I think that such "explanations" are merely justifications for not reforming Stat 101. Is the course too crowded? Then, throw some items overboard. The new topics are too advanced? Figure out how to teach or motivate them in an accessible way. Is too much computing needed? Make computing more straightforward and accessible.
+
+The Stat 101 topics are also stabilized by a lack of contact of instructors with a broader statistics education community. My personal experiences working with hundreds of instructors from a wide variety of institutions suggest that most instructors are yet aware of significant developments from 2016, such as the ASA GAISE report or the ASA Statement on p-values. An instructor who has not met the extensive critique of p-values is unlikely to prioritize reducing the coverage of p-values in his or her course.
+
+
+
+

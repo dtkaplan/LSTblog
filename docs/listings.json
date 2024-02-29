@@ -2,8 +2,15 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/Correlation-is-causation/index.html",
+      "/posts/Pithy-R/index.html",
+      "/posts/Why-LST/index.html",
+      "/posts/Likelihood/index.html",
+      "/posts/Renovations/index.html",
       "/posts/LSTbook-on-CRAN/index.html",
-      "/posts/StatChat-10-2023/index.html"
+      "/posts/StatChat-10-2023/index.html",
+      "/posts/Lesson-12-Adjustment/index.html",
+      "/posts/Lesson-23-Confidence-intervals/index.html"
     ]
   }
 ]

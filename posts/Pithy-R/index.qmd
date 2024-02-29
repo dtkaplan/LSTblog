@@ -1,0 +1,51 @@
+---
+title: "Reducing R friction with the `{LSTbook}` package"
+author: "Daniel Kaplan"
+date: "2024-02-29"
+categories: []
+---
+
+```{r include=FALSE}
+library(LSTbook)
+```
+
+
+The "learning curve" and "overhead" are standard metaphors for the difficulties of learning something new. R is described as having a steep learning curve and high overhead. I prefer another metaphor: "friction." Over the last 20 years, I have introduced students and instructors to ways of using R with less friction, for example, with the `{mosaic}` set of packages. As R and the R ecosystem continue to develop, the potential to reduce friction becomes greater. Many of these developments are widely known in the R community. Examples are `{ggplot2}`, RStudio, Shiny, the tidyverse, and implementations for data wrangling such `{dplyr}`.
+
+This post is about my latest work to reduce friction, focusing on the structure of R commands for introducing statistical thinking and engaging data science. This new work forms part of a project to reform the set of ideas taught in applied introductory statistics, discarding outdated methods and encompassing the "advanced" methods and concepts widely used in applied research and data science. That reform is presented in [*Lessons in Statistical Thinking* (LST)](https://dtkaplan.github.io/Lessons-in-statistical-thinking/), a free, online, open-source text for a model course.
+
+An important technique for reducing friction is to make as small as possible the number of object types. In *LST*, there are just three object types: data frames, model objects, and DAGs. 
+
+Another way to reduce friction is to avoid forcing the user to make choices than can sensibly be made automatically. An example of this in *LST* is the construction of data graphics. *LST* standarizes on the "annotated point plot" as produced by the `LSTbook::point_plot()` function. The user need only specify a data frame and a tilde expression that identifies which are the explanatory variables and which is the response variable. Given this information, `point_plot()` makes sensible choices. For example, using the well-known Palmer penguin data, @fig-penguin1 shows a plot of `bill_length` in terms of two explanatory variables.
+
+::: {#fig-penguin1}
+```{r}
+Penguins |> point_plot(bill_length ~ mass + flipper)
+```
+:::
+
+The response variable is always placed on the y axis. The first explanatory variable is mapped to x, the second (if any) to color and a third (if any) to facet. When continuous variables are being mapped to color or facet, they are automatically discretized in order to make the graphic easier to interpret. Might an experienced user want to use a continuous scale of color? Of course. But for the beginning user it's better to use a more easily interpreted scale.
+
+When discrete-valued, categorical variables are being plotted, jittering is automatically applied to the spatial coordinates, as in @fig-penguin2:
+
+::: {#fig-penguin2}
+```{r}
+Penguins |> point_plot(sex ~ flipper + species, annot = "model")
+```
+
+:::
+
+
+
+Friction is often introduced by the need to make syntactical choices in writing commands. Examples often seen in the use of R in introductory statistics include the various ways of storing arrays of data, indexing subsets of data, and adding new components to data. These include dollar signs, square braces (both single and double), commas encasing blank space, and so on. 
+
+
+Friction is also introduced by having a large number of object types for similar purposes (e.g. vectors, lists, data frames). An example of this prevalent in introductory statistics is the use of different functions to perform essentially the same operation, e.g. `t.test()`, `prop.test()`, `lm()`, `glm()`.  
+
+Another source of friction is the use of differently named functions (and different argument schemes) when the issue is really the details of the operation to be performed, not the type of operation.
+
+1. A large number of basic object types. For instance, introductions to R often include vectors, lists, data frames, 
+2. A variety of syntaxes for invoking operations on arguments.
+3. The clarity of the syntax, for instance spreading apart typographically the arguments to a function.
+4. A large number of named operations.
+5. Failure to use analogous syntax for analogous operations. For example, in `{ggplot2}`, named arguments are used to specify how variables are mapped to aesthetics (e.g. `aes(x = age, y = height))`, while in modeling, tilde expressions ("R formulas") are used to describe the roles of response and explanatory variables (e.g. `lm(height ~ age)`).

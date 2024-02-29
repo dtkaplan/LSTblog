@@ -16,5 +16,26 @@
   },
   "posts/StatChat-10-2023/index.qmd": {
     "index.html": "804d2c5f"
+  },
+  "posts/Lesson-12-Adjustment/index.qmd": {
+    "index.html": "4a0e790c"
+  },
+  "posts/Lesson-23-Confidence-intervals/index.qmd": {
+    "index.html": "b481e120"
+  },
+  "posts/Why-LST/index.qmd": {
+    "index.html": "483bc7b3"
+  },
+  "posts/Pithy-R/index.qmd": {
+    "index.html": "b36e098a"
+  },
+  "posts/Likelihood/index.qmd": {
+    "index.html": "249564f0"
+  },
+  "posts/Correlation-is-causation/index.qmd": {
+    "index.html": "a81db999"
+  },
+  "posts/Renovations/index.qmd": {
+    "index.html": "5b543ad0"
   }
 }

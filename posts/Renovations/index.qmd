@@ -1,0 +1,42 @@
+---
+title: "Innovation and renovation for intro stats"
+author: "Daniel Kaplan"
+date: "2024-02-01"
+categories: [software]
+---
+
+George Cobb (1947-[2020](https://magazine.amstat.org/blog/2020/07/01/remembering-george-cobb-1947-2020/)), an esteemed statistical educator, had a keen eye for metaphor. In a provocative article in *The American Statistician*, George's central metaphor is a house that has become ill-suited to its residents. He argued, "Mere renovation is too little too late; we need to rethink our undergraduate curriculum from the ground up."
+
+The textbook [*Lessons in Statistical Thinking*](https://dtkaplan.github.io/Lessons-in-statistical-thinking/) (*LST*) presents my ground-up rebuild of the introductory statistics course. This post is intended for instructors who are starting the move from the old house to the new, to prepare them for many of the innovations they will encounter.
+
+## Teach data organization
+
+## Simplify and unify graphics
+
+## Computational patterns
+
+## Variation and variance
+
+## Renovated vocabulary
+
+As a rule, it's good to respect the accepted vocabulary of a field. But much of the vocabulary used in introductory statistics introduces confusion to students
+
+Coefficient:
+Correlation coefficient vs model coefficients. R^2^ ("R-squared") rather than "coefficient of determination." 
+
+Standard deviation:
+Switch to "*variance*," which is a built-in reminder of exactly what it measure: variation.  
+
+Standard error:
+
+Data set, table, data table:
+
+Use "*data frame*" instead. In *LST*, data frames always satisfy the principles of "tidy" data organization. In contrast, a "table" is a summary of data for the human reader, which can be organized in whatever way best serves the purpose of communication with the reader.
+
+Data frames are covered in the first Lesson of *LST* because they establish essential vocabulary needed in all later Lessons.
+
+Row, case, data point, unit:
+
+These are mainly used as synonyms. *LST* uses "specimen" to refer to what is being represented by a row in a data frame. Think of a museum collection, which contains many objects collected from the real world. Each of those objects is a "specimen."
+
+
