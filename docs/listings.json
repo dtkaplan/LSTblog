@@ -2,9 +2,11 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/WebR/index.html",
       "/posts/Correlation-is-causation/index.html",
       "/posts/Pithy-R/index.html",
       "/posts/Why-LST/index.html",
+      "/posts/Triangles/index.html",
       "/posts/Likelihood/index.html",
       "/posts/Renovations/index.html",
       "/posts/LSTbook-on-CRAN/index.html",

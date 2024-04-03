@@ -1,0 +1,32 @@
+---
+title: "Pythagorean statistics"
+author: "Daniel Kaplan"
+date: "2024-02-28"
+categories: [residuals, variance]
+---
+
+```{r include=FALSE}
+library(LSTbook)
+```
+
+::: {.callout-warning}
+# DRAFT, DRAFT, DRAFT
+:::
+
+
+**Instructors** should note the similarity of the partitioning of variances to the Pythagorean Theorem. With right triangles, the square lengths of the legs add to the square length of the hypotenuse: $A^2 + B^2 = C^2$. This is not a coincidence.
+
+Seen as vectors, the response variable is the hypotenuse of a right triangle whose legs are the model values and residuals. You can see that the legs are perpendicular from the dot product of the model values and the residuals:
+
+REPLACE THIS WITH A STAND-ALONE EXAMPLE
+
+MAYBE CALCULATE THE VARIANCE TO SHOW THE ANALOGY TO THE RIGHT TRIANGLE. "Regarding the residuals and the model values as vectors, we can confirm the analogy to the right triangle by calculating their dot product. It's zero, indicating that the vectors are perpendicular."
+
+```{r eval=FALSE}
+Model1 |>
+  summarize(dotproduct = sum(modval * resid))
+```
+
+
+
+

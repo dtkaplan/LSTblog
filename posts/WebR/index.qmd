@@ -1,0 +1,86 @@
+---
+title: "LST computing in your browser"
+author: "Daniel Kaplan"
+date: "2024-04-03"
+categories: [LSTbook, computing]
+# Enable webR
+webr:
+  channel-type: 'automatic'
+  packages: ['ggplot2', 'dplyr', 'LSTbook', 'ggformula', 'mosaicData', 'moderndive', 'palmerpenguins', 'babynames', 'knitr', 'rmarkdown', 'stringdist', 'mosaicData' ]
+filters:
+  - webr
+---
+
+This page provides an easy way to get started with computing for *Lessons in Statistical Thinking*.
+
+Instructions: 
+
+1. Give your commands in the code blocks below.
+2. If something in Code Block 2 depends on an object created (with `<-`) in Code Block 1, run Code Block 1 first.
+3. Keeping this page open in your browser will help speed the initialization.
+
+**Code Block 1**
+```{webr-r}
+Mod1 <- mtcars |> model_train(mpg ~ hp + wt)
+
+
+```
+
+**Code Block 2**
+```{webr-r}
+Mod1 |> conf_interval()
+
+
+```
+
+::: {.callout-note collapse="true"}
+## The storage arrow
+
+Press the "start over" icon (<i class="fa-solid fa-rotate"></i>) in Code Blocks 1 and 2 to reset the blocks to their original content. 
+
+*Background*
+
+i. Note in Code Block 1 that the storage arrow (`<-`) is being used to create an object called `Mod1`.
+ii. Note also that Code Block 2 puts the `Mod1` object at the start of a pipeline.
+
+*Activity*
+
+a. Run Code Block 2 *without* having previously run Block 1. What happens?
+b. Now run Block 1. Afterwards, run Block 2. What has changed from (a)?
+c. Press <i class="fa-solid fa-rotate"></i> in Block 1. then run Block 2 again. What happens?
+d. Run Block 1 again, then press <i class="fa-solid fa-rotate"></i> for Block 2. Can you then run Block 2 successfully?
+
+
+:::
+
+## Basics of computing in *Lessons*
+
+### Data frames
+
+Many data frames are already available by name. Commonly used examples in *Lessons* include: `Birdkeepers`, `Grades`, `Galton`, `Hill_racing`, `Penguins`, `SAT`, `TenMileRace`, `Whickham`
+
+**Looking at the codebook for a data frame**
+
+Use `??` followed by the name of the data frame.
+```{webr-r}
+??Birdkeepers
+```
+
+**See the first several rows**
+
+```{webr-r}
+Birdkeepers |> head()
+```
+
+**See the variable names**
+
+```{webr-r}
+Birdkeepers |> names()
+```
+
+### Annotated point plots
+
+```{webr-r}
+Birdkeepers |> 
+  point_plot(YR ~ AG + FM, annot = "model")
+```
