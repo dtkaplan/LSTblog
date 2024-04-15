@@ -1,0 +1,15 @@
+{
+  "hash": "6809974f5059cfd59c348d7826581c5b",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Pythagorean statistics\"\nauthor: \"Daniel Kaplan\"\ndate: \"2024-02-28\"\ncategories: [residuals, variance]\n---\n\n\n\n\n::: {.callout-warning}\n# DRAFT, DRAFT, DRAFT\n:::\n\n\n**Instructors** should note the similarity of the partitioning of variances to the Pythagorean Theorem. With right triangles, the square lengths of the legs add to the square length of the hypotenuse: $A^2 + B^2 = C^2$. This is not a coincidence.\n\nSeen as vectors, the response variable is the hypotenuse of a right triangle whose legs are the model values and residuals. You can see that the legs are perpendicular from the dot product of the model values and the residuals:\n\nREPLACE THIS WITH A STAND-ALONE EXAMPLE\n\nMAYBE CALCULATE THE VARIANCE TO SHOW THE ANALOGY TO THE RIGHT TRIANGLE. \"Regarding the residuals and the model values as vectors, we can confirm the analogy to the right triangle by calculating their dot product. It's zero, indicating that the vectors are perpendicular.\"\n\n\n::: {.cell}\n\n```{.r .cell-code}\nModel1 |>\n  summarize(dotproduct = sum(modval * resid))\n```\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

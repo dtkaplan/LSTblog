@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Daniel Kaplan">
-<meta name="dcterms.date" content="2024-04-03">
+<meta name="author" content="Daniel Kaplan based on Douglas Whitaker’s STEW Lesson Plan">
+<meta name="dcterms.date" content="2024-04-19">
 
-<title>Instructor Blog for Lessons in Statistical Thinking - LST computing in your browser</title>
+<title>Instructor Blog for Lessons in Statistical Thinking - Nonlinear Modeling: Something Fishy</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -234,7 +234,7 @@ globalThis.qwebrCustomizedWebROptions = {
 };
 
 // Store cell data
-globalThis.qwebrCellDetails = [{"options":{"label":"unnamed-chunk-1","autorun":"true","classes":"","comment":"","warning":"true","out-width":"700px","read-only":"false","echo":"false","fig-cap":"","fig-height":5,"dpi":72,"fig-width":7,"output":"true","message":"true","out-height":"","results":"markup","context":"setup"},"id":1,"code":"fx <- function(x) sin(x)"},{"options":{"read-only":"false","comment":"","results":"markup","dpi":72,"message":"true","label":"unnamed-chunk-2","autorun":"false","classes":"","fig-height":5,"context":"interactive","warning":"true","out-width":"700px","out-height":"","output":"true","fig-width":7,"fig-cap":""},"id":2,"code":"mtcars |> \n  model_train(mpg ~ hp + wt) |>\n  conf_interval()\n"},{"options":{"read-only":"false","comment":"","results":"markup","dpi":72,"message":"true","label":"unnamed-chunk-3","autorun":"false","classes":"","fig-height":5,"context":"interactive","warning":"true","out-width":"700px","out-height":"","output":"true","fig-width":7,"fig-cap":""},"id":3,"code":""},{"options":{"read-only":"false","comment":"","results":"markup","dpi":72,"message":"true","label":"unnamed-chunk-4","autorun":"false","classes":"","fig-height":5,"context":"interactive","warning":"true","out-width":"700px","out-height":"","output":"true","fig-width":7,"fig-cap":""},"id":4,"code":""},{"options":{"read-only":"false","comment":"","results":"markup","dpi":72,"message":"true","label":"unnamed-chunk-5","autorun":"false","classes":"","fig-height":5,"context":"interactive","warning":"true","out-width":"700px","out-height":"","output":"true","fig-width":7,"fig-cap":""},"id":5,"code":"?Birdkeepers"},{"options":{"read-only":"false","comment":"","results":"markup","dpi":72,"message":"true","label":"unnamed-chunk-6","autorun":"false","classes":"","fig-height":5,"context":"interactive","warning":"true","out-width":"700px","out-height":"","output":"true","fig-width":7,"fig-cap":""},"id":6,"code":"Birdkeepers |> head()"},{"options":{"read-only":"false","comment":"","results":"markup","dpi":72,"message":"true","label":"unnamed-chunk-7","autorun":"false","classes":"","fig-height":5,"context":"interactive","warning":"true","out-width":"700px","out-height":"","output":"true","fig-width":7,"fig-cap":""},"id":7,"code":"Birdkeepers |> names()"},{"options":{"read-only":"false","comment":"","results":"markup","dpi":72,"message":"true","label":"unnamed-chunk-8","autorun":"false","classes":"","fig-height":5,"context":"interactive","warning":"true","out-width":"700px","out-height":"","output":"true","fig-width":7,"fig-cap":""},"id":8,"code":"Penguins |> point_plot(flipper ~ species)"},{"options":{"read-only":"false","comment":"","results":"markup","dpi":72,"message":"true","label":"unnamed-chunk-9","autorun":"false","classes":"","fig-height":5,"context":"interactive","warning":"true","out-width":"700px","out-height":"","output":"true","fig-width":7,"fig-cap":""},"id":9,"code":"?palmerpenguins::penguins"},{"options":{"read-only":"false","comment":"","results":"markup","dpi":72,"message":"true","label":"unnamed-chunk-10","autorun":"false","classes":"","fig-height":5,"context":"interactive","warning":"true","out-width":"700px","out-height":"","output":"true","fig-width":7,"fig-cap":""},"id":10,"code":"Mod1 <- Galton |> model_train(height ~ mother + father)"},{"options":{"read-only":"true","comment":"","results":"markup","dpi":72,"message":"true","label":"unnamed-chunk-11","autorun":"false","classes":"","fig-height":5,"context":"interactive","warning":"true","out-width":"700px","out-height":"","output":"true","fig-width":7,"fig-cap":""},"id":11,"code":"Mod1 |> conf_interval()"},{"options":{"read-only":"false","comment":"","results":"markup","dpi":72,"message":"true","label":"unnamed-chunk-12","autorun":"false","classes":"","fig-height":5,"context":"interactive","warning":"true","out-width":"700px","out-height":"","output":"true","fig-width":7,"fig-cap":""},"id":12,"code":"Mod1 <- Galton |> model_train(height ~ mother + father)"},{"options":{"read-only":"false","comment":"","results":"markup","dpi":72,"message":"true","label":"Hello","autorun":"false","classes":"","fig-height":5,"context":"interactive","warning":"true","out-width":"700px","out-height":"","output":"true","fig-width":7,"fig-cap":""},"id":13,"code":"Mod1 |> conf_interval()"},{"options":{"read-only":"false","comment":"","results":"markup","dpi":72,"message":"true","label":"unnamed-chunk-14","autorun":"false","classes":"","fig-height":5,"context":"interactive","warning":"true","out-width":"700px","out-height":"","output":"true","fig-width":7,"fig-cap":""},"id":14,"code":"Birdkeepers |> \n  point_plot(YR ~ AG + FM, annot = \"model\")"}];
+globalThis.qwebrCellDetails = [{"id":1,"options":{"label":"unnamed-chunk-1","out-height":"","fig-cap":"","output":"true","fig-width":7,"classes":"","message":"true","context":"setup","autorun":"true","out-width":"700px","dpi":72,"echo":"false","warning":"true","fig-height":5,"comment":"","results":"markup","read-only":"false"},"code":"Trout <- read.csv(\"https://www.mosaic-web.org/go/datasets/trout-perch.csv\")"},{"id":2,"options":{"read-only":"false","out-height":"","message":"true","label":"unnamed-chunk-2","out-width":"700px","context":"interactive","autorun":"false","fig-cap":"","classes":"","output":"true","warning":"true","comment":"","dpi":72,"fig-width":7,"results":"markup","fig-height":5},"code":"Trout |> point_plot()"}];
 
 </script>
 <script type="module">
@@ -952,35 +952,6 @@ globalThis.qwebrExecuteCode = async function (
 
 </script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -1022,9 +993,9 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">LST computing in your browser</h1>
+      <h1 class="title">Nonlinear Modeling: Something Fishy</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">LSTbook</div>
+                <div class="quarto-category">regression</div>
                 <div class="quarto-category">computing</div>
               </div>
                   </div>
@@ -1036,14 +1007,14 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Author</div>
       <div class="quarto-title-meta-contents">
-               <p>Daniel Kaplan </p>
+               <p>Daniel Kaplan based on Douglas Whitaker’s <a href="https://www.statisticsteacher.org/files/2021/03/SomethingFishyLessonPlan.pdf">STEW Lesson Plan</a> </p>
             </div>
     </div>
       
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">April 3, 2024</p>
+        <p class="date">April 19, 2024</p>
       </div>
     </div>
     
@@ -1236,169 +1207,27 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 
 
 
-<p>This page provides an easy way to get started with computing for <em>Lessons in Statistical Thinking</em>.</p>
-<p>Instructions:</p>
-<ol type="1">
-<li>Write your commands in the code chunk.</li>
-<li>Sometimes it takes about 15 seconds (or longer, depending on your web connection)for this page to initialize. (You’ll see a “installing package” message in the chunk during initialization.) Keeping this page open in your browser will help speed the initialization.</li>
-</ol>
+<p>This example lesson is entirely based on a lesson plan posted in April 2021 on the STEW site, written by Douglas Whitaker of Mount Saint Vincent University.</p>
+<section id="overview-of-lesson" class="level2">
+<h2 class="anchored" data-anchor-id="overview-of-lesson">Overview of Lesson</h2>
+<p>In this lesson students explore nonlinear regression models to explain fish weight using fish length, using both transformation of the response variable and polynomial regression. Geometric interpretations of variables are leveraged to suggest nonlinear models to fit. The intention of this lesson is for students to perform two or three linear regression analyses that feel like others that they have done before: the difference is that they draw on prior knowledge of geometric/physical relationships to suggest a modification to the first analysis to improve it. Because most of the nonlinear models considered in this lesson have only a single predictor variable, students’ familiarity with simple linear regression can be extended to nonlinear modeling. If students are familiar with multiple linear regression, then two additional polynomial regression models can be included.</p>
 <hr>
 <div id="qwebr-insertion-location-1"></div>
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
-<p><strong>Write your R statements here</strong>.</p>
+<p>Note: Throughout the lesson, the term weight is used for what is more properly described as mass. The original dataset uses the term weight but measures the fish using metric units for mass. The distinction is irrelevant to the lesson, but it would be reasonable to make the changes throughout the lesson if the distinction matters to you.</p>
+</section>
+<section id="description-of-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="description-of-dataset">Description of Dataset</h2>
+<p>Scientists are interested in monitoring the health of trout perch in the Oil Sands Region of Canada.1,2 As part of a larger study, fish were collected from the Athabasca River and Peace River, and several characteristics were measured, including the Weight of each fish (in grams) and the Length of each fish (in millimeters). The dataset used in this analysis includes data from 2088 trout perch. The first six rows of this dataset are shown to illustrate what the file looks like.</p>
+</section>
+<section id="initial-analysis-simple-linear-regression" class="level2">
+<h2 class="anchored" data-anchor-id="initial-analysis-simple-linear-regression">Initial Analysis (Simple Linear Regression)</h2>
+<p>Examine the relationship between fish Weight and fish Length using simple linear regression and to assess the appropriateness of the model.</p>
 <div id="qwebr-insertion-location-2"></div>
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
-<p>The following chunks are for your convenience. For instance, you might want to copy-and-paste some code from the previous chunk in order to be able to refer to it later.</p>
-<div id="qwebr-insertion-location-3"></div>
-<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
-<div id="qwebr-insertion-location-4"></div>
-<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
-<p><label for="student_name">Student Name/Section/etc.</label></p>
-<textarea id="student_name" name="student_name" rows="2" cols="50"></textarea>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Data</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Point plots</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">Wrangling</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false">Model shapes</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-5" role="tab" aria-controls="tabset-1-5" aria-selected="false">Simulation</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-6-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-6" role="tab" aria-controls="tabset-1-6" aria-selected="false">Wrangling</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-7-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-7" role="tab" aria-controls="tabset-1-7" aria-selected="false">Computing</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-8-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-8" role="tab" aria-controls="tabset-1-8" aria-selected="false">Computing</a></li></ul>
-<div class="tab-content">
-<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Data frames
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Many data frames are already available by name. Commonly used examples in <em>Lessons</em> include: <code>Birdkeepers</code>, <code>Grades</code>, <code>Galton</code>, <code>Hill_racing</code>, <code>Penguins</code>, <code>SAT</code>, <code>TenMileRace</code>, <code>Whickham</code></p>
-<p><strong>Looking at the codebook for a data frame</strong></p>
-<p>Use <code>?</code> followed by the name of the data frame.</p>
-<div id="qwebr-insertion-location-5"></div>
-<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
-<p><strong>See the first several rows</strong></p>
-<div id="qwebr-insertion-location-6"></div>
-<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
-<p><strong>See the variable names</strong></p>
-<div id="qwebr-insertion-location-7"></div>
-<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Pipeline to <code>point_plot()</code>
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>The most common operation in <em>Lessons</em> is to make a point plot of a <em>response variable</em> versus one or more <em>explanatory variables.</em> To illustrate, here is a point plot of flipper length versus species for three different species of penguins, using the data recorded in the <code>Penguins</code> data frame.</p>
-<div id="qwebr-insertion-location-8"></div>
-<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
-<p>The name of the data frame comes first in the R command. The <code>|&gt;</code> creates a pipeline into an operation on the data. The particular operation here is <code>point_plot()</code>.</p>
-<p><code>point_plot()</code> requires one argument: a tilde expression with the name of the response variable on the left and the explanatory variable on the right. In the above example, the tilde expression is <code>flipper ~ species</code>. (The squiggly character, <span class="math inline">\({\LARGE \sim}\)</span>, is called a “tilde.”)</p>
-<p><em>Activity</em>:</p>
-<ol type="a">
-<li><p>Each dot in the point plot corresponds to a single row in the <code>Penguins</code> data frame. The dots are slightly spread apart horizontally at random. What is this spread-apart technique called and why is it useful.</p></li>
-<li><p>Add a violin annotation to the above plot by giving a second argument, <code>annot = "violin"</code>. (Note the quotes around <code>"violin"</code>.) For what value of <code>flipper</code> is the Adelie species violin the thickest? Choose one of 175mm, 185mm, 190mm, 200mm. How about for the Chinstrap penguins?</p></li>
-<li><p>Remove the violin annotation and replace it with <code>annot = "model"</code>. What do the annotations look like?</p></li>
-<li><p>Each species has its own model annotation. The vertical extent of the annotation indicates the precision of the model. When two such annotations (for different species) overlap vertically, the statistical methodology is telling us that we cannot statistically discern that the model values are different for the two species. Do any of the annotations overlap vertically?</p></li>
-</ol>
-<blockquote class="blockquote">
-<p><em>Note: We know that <code>flipper</code> is in mm from the documentation (also sometimes called the “codebook”) for the <code>palmerpenguins::penguins</code> data frame.</em> To see the codebook, use <code>?</code> followed by the name of the data frame. Try it!</p>
-</blockquote>
-<div id="qwebr-insertion-location-9"></div>
-<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
 
-</div>
-<div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
 
-</div>
-<div id="tabset-1-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-5-tab">
-
-</div>
-<div id="tabset-1-6" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-6-tab">
-
-</div>
-<div id="tabset-1-7" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-7-tab">
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Storage arrow
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>The following chunk trains a simple model of the child’s <code>height</code> as a function of the heights of the <code>mother</code> and <code>father</code>. Using the storage arrow (<code>&lt;-</code>), the trained model is stored under the name <code>Mod1</code>.</p>
-<div id="qwebr-insertion-location-10"></div>
-<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
-<p>Having stored the trained model, you can access it to look at it or perform additional operations on it in a subsequent chunk. Of course, you have to “Run Code” the first chunk before you can use those results in any subsequent chunk.</p>
-<div id="qwebr-insertion-location-11"></div>
-<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
-</div>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Dependent code chunks
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>The following chunk trains a simple model of the child’s <code>height</code> as a function of the heights of the <code>mother</code> and <code>father</code>. Using the storage arrow (<code>&lt;-</code>) the model is stored under the name <code>Mod1</code></p>
-<p><strong>Chunk 1</strong></p>
-<div id="qwebr-insertion-location-12"></div>
-<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
-<p>Chunk 2, below, does some additional processing on the <code>Mod1</code> object.</p>
-<p><strong>Chunk 2</strong></p>
-<div id="qwebr-insertion-location-13"></div>
-<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
-<p>Press “Run Code” in Chunk 1 and then in Chunk 2. So long as you run Chunk 1 first, Chunk 2 will have access to the already created <code>Mod1</code>. But if you try to run Chunk 2 <em>before</em> having run Chunk 1, you will get an error message.</p>
-<p><em>Activity</em></p>
-<ol type="a">
-<li><p>Press the “start over” icon (<i class="fa-solid fa-rotate"></i>) in Chunks 1 and 2 to reset the chunks to their original content.</p></li>
-<li><p>Run Code Block 2 <em>without</em> having previously run Block 1. What happens?</p></li>
-<li><p>Now run Block 1. Afterwards, run Block 2. What has changed from (a)?</p></li>
-<li><p>Press <i class="fa-solid fa-rotate"></i> in Block 1. then run Block 2 again. What happens?</p></li>
-<li><p>Run Block 1 again, then press <i class="fa-solid fa-rotate"></i> for Block 2. Can you then run Block 2 successfully?</p></li>
-</ol>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-1-8" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-8-tab">
-<section id="annotated-point-plots" class="level3">
-<h3 class="anchored" data-anchor-id="annotated-point-plots">Annotated point plots</h3>
-<div id="qwebr-insertion-location-14"></div>
-<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 </section>
-</div>
-</div>
-</div>
-<!-- end of tabset -->
-
-
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

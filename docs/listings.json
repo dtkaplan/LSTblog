@@ -2,12 +2,14 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/Trout-perch-allometrics/index.html",
       "/posts/WebR/index.html",
       "/posts/Correlation-is-causation/index.html",
       "/posts/Pithy-R/index.html",
       "/posts/Why-LST/index.html",
       "/posts/Triangles/index.html",
       "/posts/Likelihood/index.html",
+      "/posts/Streamlining-graphics/index.html",
       "/posts/Renovations/index.html",
       "/posts/LSTbook-on-CRAN/index.html",
       "/posts/StatChat-10-2023/index.html",

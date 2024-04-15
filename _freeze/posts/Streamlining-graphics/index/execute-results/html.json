@@ -1,0 +1,15 @@
+{
+  "hash": "51301c091a198755cfdd7c3dbcd70397",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"*Instructor's Note: Streamlining graphics\"\nauthor: \"Daniel Kaplan\"\ndate: \"2024-02-26\"\ncategories: [graphics, instructor note]\n---\n\n\n\n\n*Lessons in Statistical Thinking* incorporates only one form of data graphics, the  \"**annotated point plot**.\" This bucks tradition, which calls for presenting a repertoire of several graphics types. So, there are no bar plots, very few probability density curves, and no box-and-whisker plots.\n\nNaturally, an instructor may choose to cover such diverse types of graphics, but they are not needed to follow the flow of the *Lessons*. \n\nWhy might an instructor do better by avoiding needless variety in graphical modes? Many traditional modes are obsolete, for example stem-and-leaf plots which were invented by Tufte to facilitate graphing distributions on a **typewriter*. Very few of our students have ever seen a typewriter, let alone used one. And many traditional modes have superior modern alternatives. Box-and-whisker plots are not as telling as violins. Similarly, continuous estimates of probability density (as in a violin) are superior to histograms in almost every way.\n\nOne of the chief aims in writing *Lessons* is to help shift the emphasis in college-level statistics from the distribution of a single variable to descriptions and analysis of the *relationship* between variables. The natural frame for a data graphic about relationships (and models of those relationships) involves mapping each axis to a variable.\n\nRegression models always involve a *response variable*. Graphics in *Lessons* always places that variable on the vertical axis. The first explanatory variable is always placed on the horizontal axis. (Color and faceting are used for a second or third explanatory variable.)\nTraditional introductory statistics emphasizes a **single variable** and the accompanying graphics sometimes place this on the horizontal and sometimes on the vertical axis. (See [these examples](https://dtkaplan.github.io/Lessons-in-statistical-thinking/L02-Pointplots.html#many-plot-formats).) Better to standardize.\n\n\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

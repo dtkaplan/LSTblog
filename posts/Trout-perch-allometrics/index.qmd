@@ -1,0 +1,44 @@
+---
+title: "Nonlinear Modeling: Something Fishy"
+author: "Daniel Kaplan based on Douglas Whitaker's [STEW Lesson Plan](https://www.statisticsteacher.org/files/2021/03/SomethingFishyLessonPlan.pdf)"
+date: "2024-04-19"
+categories: [regression, computing]
+# Enable webR
+webr:
+  channel-type: 'automatic'
+  packages: ['ggplot2', 'dplyr', 'LSTbook', 'ggformula', 'mosaicData', 'moderndive', 'palmerpenguins', 'babynames', 'knitr', 'rmarkdown', 'stringdist', 'mosaicData' ]
+filters:
+  - webr
+---
+
+This example lesson is entirely based on a lesson plan posted in April 2021 on the STEW site, written by Douglas Whitaker of Mount Saint Vincent University.
+
+## Overview of Lesson
+In this lesson students explore nonlinear regression models to explain fish weight using fish length, using both transformation of the response variable and polynomial regression. Geometric interpretations of variables are leveraged to suggest nonlinear models to fit. The intention of this lesson is for students to perform two or three linear regression analyses that feel like others that they have done before: the difference is that they draw on prior knowledge of geometric/physical relationships to suggest a modification to the first analysis to improve it. Because most of the nonlinear models considered in this lesson have only a single predictor variable, students’ familiarity with simple linear regression can be extended to nonlinear modeling. If students are familiar with multiple linear regression, then two additional polynomial regression models can be included. 
+
+
+-----
+
+```{webr-r}
+#| context: setup
+#| echo: false
+Trout <- read.csv("https://www.mosaic-web.org/go/datasets/trout-perch.csv")
+```
+
+Note: Throughout the lesson, the term weight is used for what is more properly described as mass. The original dataset uses the term weight but measures the fish using metric units for mass. The distinction is irrelevant to the lesson, but it would be reasonable to make the changes throughout the lesson if the distinction matters to you.
+
+## Description of Dataset
+
+Scientists are interested in monitoring the health of trout perch in the Oil Sands Region of Canada.1,2 As part of a larger study, fish were collected from the Athabasca River and Peace River, and several characteristics were measured, including the Weight of each fish (in grams) and the Length of each fish (in millimeters). The dataset used in this analysis includes data from 2088 trout perch. The first six rows of this dataset are shown to illustrate what the file looks like. 
+
+
+## Initial Analysis (Simple Linear Regression)
+
+Examine the relationship between fish Weight and
+fish Length using simple linear regression and to assess the
+appropriateness of the model. 
+
+```{webr-r}
+Trout |> point_plot()
+```
+

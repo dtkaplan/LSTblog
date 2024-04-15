@@ -47,6 +47,11 @@ The following chunks are for your convenience. For instance, you might want to c
 
 ```
 
+<label for="student_name">Student Name/Section/etc.</label>
+
+<textarea id="student_name" name="student_name" rows="2" cols="50">
+</textarea>
+
 :::: {.panel-tabset}
 
 ## Data 
@@ -58,9 +63,9 @@ Many data frames are already available by name. Commonly used examples in *Lesso
 
 **Looking at the codebook for a data frame**
 
-Use `??` followed by the name of the data frame.
+Use `?` followed by the name of the data frame.
 ```{webr-r}
-??Birdkeepers
+?Birdkeepers
 ```
 
 **See the first several rows**
