@@ -2,7 +2,7 @@
 title: "Nonlinear Modeling: Something Fishy"
 author: "Daniel Kaplan based on Douglas Whitaker's [STEW Lesson Plan](https://www.statisticsteacher.org/files/2021/03/SomethingFishyLessonPlan.pdf)"
 date: "2024-04-19"
-categories: [regression, computing]
+categories: [regression, logarithms, allometry, computing]
 # Enable webR
 webr:
   channel-type: 'automatic'
@@ -11,10 +11,15 @@ filters:
   - webr
 ---
 
-This example lesson is entirely based on a lesson plan posted in April 2021 on the STEW site, written by Douglas Whitaker of Mount Saint Vincent University.
+```{r include=FALSE}
+library(LSTbook)
+```
+
+This example lesson is modified from a lesson plan posted in April 2021 on the [STEW site](https://www.amstat.org/education/stew/statistics-education-web-(stew)), written by Douglas Whitaker of Mount Saint Vincent University.
 
 ## Overview of Lesson
-In this lesson students explore nonlinear regression models to explain fish weight using fish length, using both transformation of the response variable and polynomial regression. Geometric interpretations of variables are leveraged to suggest nonlinear models to fit. The intention of this lesson is for students to perform two or three linear regression analyses that feel like others that they have done before: the difference is that they draw on prior knowledge of geometric/physical relationships to suggest a modification to the first analysis to improve it. Because most of the nonlinear models considered in this lesson have only a single predictor variable, students’ familiarity with simple linear regression can be extended to nonlinear modeling. If students are familiar with multiple linear regression, then two additional polynomial regression models can be included. 
+
+In this lesson students explore nonlinear regression models to explain fish weight using fish length, using both transformation of the response variable and polynomial regression. Geometric interpretations of variables are leveraged to suggest nonlinear models to fit. The intention of this lesson is for students to perform two or three linear regression analyses that feel like others that they have done before: the difference is that they draw on prior knowledge of geometric/physical relationships to suggest a modification to the first analysis to improve it. Because most of the nonlinear models considered in this lesson have only a single predictor variable, students’ familiarity with simple linear regression can be extended to nonlinear modeling. If students are familiar with multiple linear regression, then two additional polynomial regression models can be included. (author: Whitaker)
 
 
 -----
@@ -25,20 +30,92 @@ In this lesson students explore nonlinear regression models to explain fish weig
 Trout <- read.csv("https://www.mosaic-web.org/go/datasets/trout-perch.csv")
 ```
 
-Note: Throughout the lesson, the term weight is used for what is more properly described as mass. The original dataset uses the term weight but measures the fish using metric units for mass. The distinction is irrelevant to the lesson, but it would be reasonable to make the changes throughout the lesson if the distinction matters to you.
+Note: Throughout the lesson, the term weight is used for what is more properly described as mass. The original dataset uses the term weight but measures the fish using metric units for mass. The distinction is irrelevant to the lesson, but it would be reasonable to make the changes throughout the lesson if the distinction matters to you. (author: Whitaker)
 
 ## Description of Dataset
 
-Scientists are interested in monitoring the health of trout perch in the Oil Sands Region of Canada.1,2 As part of a larger study, fish were collected from the Athabasca River and Peace River, and several characteristics were measured, including the Weight of each fish (in grams) and the Length of each fish (in millimeters). The dataset used in this analysis includes data from 2088 trout perch. The first six rows of this dataset are shown to illustrate what the file looks like. 
+Scientists are interested in monitoring the health of trout perch in the Oil Sands Region of Canada.1,2 As part of a larger study, fish were collected from the Athabasca River and Peace River, and several characteristics were measured, including the Weight of each fish (in grams) and the Length of each fish (in millimeters). The dataset used in this analysis includes data from 2088 trout perch. (author: Whitaker) 
+
+Here are the data, in the form of a data frame named `Trout` (author: kaplan)
+
+```{r echo=FALSE, results="asis"}
+Trout <- read.csv("https://www.mosaic-web.org/go/datasets/trout-perch.csv")
+DT::datatable(Trout)
+```
 
 
 ## Initial Analysis (Simple Linear Regression)
 
-Examine the relationship between fish Weight and
-fish Length using simple linear regression and to assess the
-appropriateness of the model. 
+Examine the relationship `Weight` *versus* `Length` in the data, comparing it to a straight-line model. The `point_plot()` function will show the data and the model.
 
 ```{webr-r}
-Trout |> point_plot()
+Trout |> 
+  point_plot(Weight ~ Length, annot = "model")
 ```
+
+It can be a little difficult to see the model; it's obscured in some places by the data points. Add these two arguments to `point_plot()` to make the model easier to see: `point_ink = 0.1, model_ink = 1`.
+
+Let's fit the linear model so that we can look at the coefficients and R^2^.
+
+```{webr-r}
+Mod1 <- Trout |>
+  model_train(Weight ~ Length) 
+Mod1 |> conf_interval()
+Mod1 |> R2()
+```
+
+1. Would you describe the R^2^ as high, medium, or low?
+2. What is the meaning of the `Length` coefficient (0.1766) in terms of how fish weight is associated with length`?
+3. The confidence interval on the `Length` coefficient is very tight. Is this consistent with the R^2^ value?
+
+The numbers from the linear model are promising. But it pays to look closer. Referring to the point plot, are there any systematic deviations of the model from the data? For instance, do the data show a systematic curved shape?
+
+4. At short `Length`, does the model tend to overestimate or underestimate the `Weight`?
+5. At long `Length`, does the model tend to overestimate or underestimate the `Weight`?
+6. How about at middle `Length`.
+
+A model that systematically deviates from the data calls for improvement! How should we do so?
+
+There is a fascinating field called [allometry](https://en.wikipedia.org/wiki/Allometry) that looks at the shape of bodies or body parts as a function of size. For example, an infant has a body shape that is not just a scaled-down version of an adult. Infants have large heads and short legs and arms compared to adults.
+
+One of the general finding of allometry is that body measurements do not grow linearly. Instead, the growth is *proportionate*. This means that a given *percentage increase* in length corresponds to a given *percentage increase* in weight. This idea of proportionality is captured by the mathematical idea of logarithms. 
+
+You don't have to worry about remembering the logarithm formulas you learned in high-school. The computer happily will deal with the logs, and we'll show how to interpret them. All you have to do is take the `log()` of each of the variables.
+
+```{webr-r}
+Trout |> 
+  point_plot(log10(Weight) ~ log10(Length), annot = "model",
+             point_ink = 0.1, model_ink = 1)
+```
+7. Judging from the graph, is the log-log model a better match to the data?
+
+Looking the model quantitatively:
+
+```{webr-r}
+Mod2 <- Trout |>
+  model_train(log10(Weight) ~ log10(Length)) 
+Mod2 |> conf_interval()
+Mod2 |> R2()
+```
+
+The model formula corresponding to these coefficients is
+
+$$\log(weight) = -4.9 + 2.97 \log(length) .$$
+
+This is where those high-school formulas about logarithms come in handy. In particular, this one: $weight = 10^{log(weight)}$. This means that we can translate the formula into something without logs in sight.
+
+$$weight = (10^{-4.9})\ length^{2.97} = 0.0000126\ length^{2.97}$$
+
+8. Look at the original (non-logarithmic) data, what's a typical weight for an 80mm long fish?
+
+9. Now plug 80mm into the formula for weight.
+
+```{webr-r}
+0.0000126 * 80^2.97
+```
+
+10. Does the result match what you found in (8)?
+
+11. Now redo the calculation plugging a length of 100mm into the formula. How does the result compare to the data for fish that are 100mm long?
+
 
