@@ -2,8 +2,9 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/Trout-perch-allometrics/index.html",
       "/posts/WebR/index.html",
+      "/posts/Trout-perch-allometrics/index.html",
+      "/posts/WebR-getting-started/index.html",
       "/posts/Correlation-is-causation/index.html",
       "/posts/Pithy-R/index.html",
       "/posts/Why-LST/index.html",

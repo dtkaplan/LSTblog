@@ -1,192 +1,106 @@
 ---
-title: "LST computing in your browser"
+title: "Instructor's Guide to Starting with WebR"
 author: "Daniel Kaplan"
-date: "2024-04-03"
-categories: [LSTbook, computing]
+date: "2024-05-01"
+categories: [LSTbook, computing, WebR]
 # Enable webR
 webr:
   channel-type: 'automatic'
-  packages: ['ggplot2', 'dplyr', 'LSTbook', 'ggformula', 'mosaicData', 'moderndive', 'palmerpenguins', 'babynames', 'knitr', 'rmarkdown', 'stringdist', 'mosaicData' ]
+  packages: ['ggplot2', 'dplyr', 'LSTbook', 'ggformula', 'mosaicData', 'moderndive', 'palmerpenguins', 'stringdist', 'mosaicData' ]
 filters:
   - webr
 ---
 
-This page provides an easy way to get started with computing for *Lessons in Statistical Thinking*.
+These notes concern writing student-facing documents with WebR, a full-featured version of R that runs in the student's browser. There are substantial advantages in doing this for the instructor:
 
-Instructions: 
+- Documents including computation are ordinary HTML (+  JavaScript) that can be posted on the web in straightforward ways.
+- There is no need to set up a server.
+- Computation can be positioned close to the text narrative that explains it or close to the exercise that a student is working on. 
+- Any packages required can be easily specified by the instructor and will be automatically loaded into the document's WebR session.
+- The interface is much simpler than RStudio. That said, the instructor herself will develop the documents using RStudio. And some instructors encourage students to write RMarkdown documents to record their work. 
 
-1. Write your commands in the code chunk.
-2. Sometimes it takes about 15 seconds (or longer, depending on your web connection)for this page to initialize. (You'll see a "installing package" message in the chunk during initialization.) Keeping this page open in your browser will help speed the initialization.
+Here's an example of a WebR chunk ...
 
------
-
+::: {lst-base-graphics}
 ```{webr-r}
-#| context: setup
-#| echo: false
-fx <- function(x) sin(x)
+plot(mpg ~ wt, data = mtcars)
 ```
+:::
 
+::: {.callout-note}
+## `{ggplot2}` and related graphics.
 
-**Write your R statements here**.
+In @lst-base-graphics I have used base R graphics just for the convenience of the reader. You can also use `{ggplot2}` graphics, perhaps with the `{ggformula}` interface. To demonstrate this, here are some more webr chunks. You could equally well paste their contents into the previous chunk.
+
 ```{webr-r}
 mtcars |> 
-  model_train(mpg ~ hp + wt) |>
-  conf_interval()
-
-
+  ggplot(aes(x = wt, y = mpg)) + 
+  geom_point(color = "blue")
 ```
 
-
-The following chunks are for your convenience. For instance, you might want to copy-and-paste some code from the previous chunk in order to be able to refer to it later.
-
+`{ggformula}` graphics:
 ```{webr-r}
-
+mtcars |> gf_point(mpg ~ wt, color = "brown")
 ```
 
+Graphics from [*Lessons in Statistical Thinking*](https://dtkaplan.github.io/Lessons-in-statistical-thinking/L02-Pointplots.html#point-plot):
 ```{webr-r}
-
-```
-
-<label for="student_name">Student Name/Section/etc.</label>
-
-<textarea id="student_name" name="student_name" rows="2" cols="50">
-</textarea>
-
-:::: {.panel-tabset}
-
-## Data 
-
-::: {.callout-note collapse="true"}
-## Data frames
-
-Many data frames are already available by name. Commonly used examples in *Lessons* include: `Birdkeepers`, `Grades`, `Galton`, `Hill_racing`, `Penguins`, `SAT`, `TenMileRace`, `Whickham`
-
-**Looking at the codebook for a data frame**
-
-Use `?` followed by the name of the data frame.
-```{webr-r}
-?Birdkeepers
-```
-
-**See the first several rows**
-
-```{webr-r}
-Birdkeepers |> head()
-```
-
-**See the variable names**
-
-```{webr-r}
-Birdkeepers |> names()
+mtcars |> point_plot(mpg ~ wt, annot = "model")
 ```
 :::
 
+## Preliminaries
 
-## Point plots
+We will use the [*quarto*](https://quarto.org/) system for producing HTML documents. Consequently, a first step is to install *quarto* on your computer. You need version 1.4 (or later), so even if you have already been using *quarto*, you may need to update. [To find out, give this command in your **terminal**: `quarto --version`]{.aside} Follow the "Get Started" link on the [*quarto*](https://quarto.org/) homepage.
 
-::: {.callout-note collapse="true"}
-## Pipeline to `point_plot()`
+*Quarto* is a stand-alone program. You will be using it from RStudio, but there are a couple of occasions when you will use the **terminal* rather than the R console to set things up.
 
-The most common operation in *Lessons* is to make a point plot of a *response variable* versus one or more *explanatory variables.*
-To illustrate, here is a point plot of flipper length versus species for three different species of penguins, using the data recorded in the `Penguins` data frame.
+We presume that you have R and RStudio installed. If you are not familiar with RStudio, you will need to become so before you can make sense of the following instructions.
 
-```{webr-r}
-Penguins |> point_plot(flipper ~ species)
-```
+At this point, we won't worry about how to deploy the documents you write on a web site. You can write functioning documents without this. That way you can try out WebR before having to set up a web site. (See web documentation on "quarto blog site" (e.g. [this page](https://quarto.org/docs/publishing/)) if you're curious about how to set up a suitable web site.)
 
-The name of the data frame comes first in the R command. The `|>` creates a pipeline into an operation on the data. The particular operation here is `point_plot()`. 
+## Producing your first document
 
-`point_plot()` requires one argument: a tilde expression with the name of the response variable on the left and the explanatory variable on the right. In the above example, the tilde expression is `flipper ~ species`. (The squiggly character, ${\LARGE \sim}$, is called a "tilde.")
+There's an excellent [four-minute video](https://youtu.be/DoRR2S5lLvk?t=5) by James Balamuta, the *Coatless Professor*. This covers just about everything you need to get started (once you have installed *quarto* and RStudio), including creating an RStudio project and a *quarto* document.
 
-*Activity*:
-
-a. Each dot in the point plot corresponds to a single row in the `Penguins` data frame. The dots are slightly spread apart horizontally at random. What is this spread-apart technique called and why is it useful.
-
-b. Add a violin annotation to the above plot by giving a second argument, `annot = "violin"`. (Note the quotes around `"violin"`.) For what value of `flipper` is the Adelie species violin the thickest? Choose one of 175mm, 185mm, 190mm, 200mm. How about for the Chinstrap penguins?
-
-c. Remove the violin annotation and replace it with `annot = "model"`. What do the annotations look like?
-
-d. Each species has its own model annotation. The vertical extent of the annotation indicates the precision of the model. When two such annotations (for different species) overlap vertically, the statistical methodology is telling us that we cannot statistically discern that the model values are different for the two species. Do any of the annotations overlap vertically?
-
-> *Note: We know that `flipper` is in mm from the documentation (also sometimes called the "codebook") for the `palmerpenguins::penguins` data frame.* To see the codebook, use `?` followed by the name of the data frame. Try it!
-```{webr-r}
-?palmerpenguins::penguins
-```
-
-:::
-
-## Wrangling
-
-## Model shapes
-
-## Simulation
-
-
-
-
-
-## Wrangling
-
-## Computing
-
-::: {.callout-note collapse="true"}
-## Storage arrow
-
-The following chunk trains a simple model of the child's `height` as a function of the heights of the  `mother` and `father`. Using the storage arrow (`<-`), the trained model is stored under the name `Mod1`.
-```{webr-r}
-Mod1 <- Galton |> model_train(height ~ mother + father)
-```
-
-Having stored the trained model, you can access it to look at it or perform additional operations on it in a subsequent chunk. Of course, you have to "Run Code" the first chunk before you can use those results in any subsequent chunk.
-
-```{webr-r}
-#| read-only: true
-Mod1 |> conf_interval()
-```
-:::
-
-
-::: {.callout-note collapse="true"}
-## Dependent code chunks
-
-The following chunk trains a simple model of the child's `height` as a function of the heights of the  `mother` and `father`. Using the storage arrow (`<-`) the model is stored under the name `Mod1`
-
-**Chunk 1**
-```{webr-r}
-Mod1 <- Galton |> model_train(height ~ mother + father)
+Take care to note what is clearly shown at time 1:38 in the video, the very brief use of the **terminal** (as opposed to the R console) to give the command up the RStudio project to use WebR. 
 
 ```
-
-Chunk 2, below, does some additional processing on the `Mod1` object. 
-
-**Chunk 2**
-```{webr-r}
-#| label: Hello
-Mod1 |> conf_interval()
-
+quarto add coatless/quarto-webr
 ```
 
-Press "Run Code" in Chunk 1 and then in Chunk 2. So long as you run Chunk 1 first, Chunk 2 will have access to the already created `Mod1`. But if you try to run Chunk 2 *before* having run Chunk 1, you will get an error message.
+You can create many documents within one project. You only have to do the `quarto add ...` once for each project. After that, you work only in RStudio.
 
-*Activity*
+The *Coatless Professor*'s video brings you all the way through displaying a working WebR document in the RStudio "Viewer" tab. But you can equally well open the document in a browser. (On the Viewer tab menu bar, click the "Show in New Window" button, which looks like a sheet of paper with an upward-facing arrow.)
 
-a. Press the "start over" icon (<i class="fa-solid fa-rotate"></i>) in Chunks 1 and 2 to reset the chunks to their original content. 
+The *Coatless Professor* provides more links to information [on this GitHub web page](https://github.com/coatless/quarto-webr?tab=readme-ov-file). Those not familiar with GitHub may be put off by the material at the top of the page. Simply scroll down until you get to the part that looks like an ordinary web page.
 
-#. Run Code Block 2 *without* having previously run Block 1. What happens?
-#. Now run Block 1. Afterwards, run Block 2. What has changed from (a)?
-#. Press <i class="fa-solid fa-rotate"></i> in Block 1. then run Block 2 again. What happens?
-#. Run Block 1 again, then press <i class="fa-solid fa-rotate"></i> for Block 2. Can you then run Block 2 successfully?
-:::
+## Editing your document
 
-## Computing
+The *Coatless Professor* video shows you the very few steps needed to set up your document for WebR. I want to elaborate just a little bit.
 
+At the top of the example document there is a header, delimited by lines with `---`, that contains information used by the *quarto* system. This information is written in a format called "YAML." Keep that name in mind.
 
-### Annotated point plots
-
-```{webr-r}
-Birdkeepers |> 
-  point_plot(YR ~ AG + FM, annot = "model")
+```
+---
+title: webR in Quarto HTML Documents
+format: html
+engine: knitr
+filters:
+  - webr
+---
 ```
 
-::::: 
-<!-- end of tabset -->
+You're free to edit the title, but leave the other items alone. YAML is very sensitive to formatting errors.
+
+The example document sets up a WebR session using base R. Many instructors will want to access R packages. To set up the document to do this automatically, add the following to the YAML header (inside the `---` delimiters):
+
+```
+webr:
+  channel-type: 'automatic'
+  packages: ['ggplot2', 'dplyr', 'LSTbook', 'ggformula', 'moderndive', 'palmerpenguins', 'stringdist', 'mosaicData' ]
+```
+
+The particular packages listed are those I use in the [*Lessons*](https://dtkaplan.github.io/Lessons-in-statistical-thinking) book. You may want to exclude some of these or include others (such as the `{mosaic}` package.) For those packages listed, you will not have to use the `library()` command in your WebR document. Neither do you need to `install.packages()`, this happens automatically. (Note that you can use `library()` in a WebR chunk, if that suits your pedagogy.)
+
+
