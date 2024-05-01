@@ -1,5 +1,5 @@
 ---
-title: "Deploying WebR Documents via GitHumb"
+title: "Deploying WebR Documents via GitHub"
 author: "Daniel Kaplan"
 date: "2024-05-01"
 categories: [LSTbook, computing]
@@ -51,6 +51,8 @@ What the top of your `quarto.yml` file should look like.
 
 - [ ] Go back to the `index.html` file and press "Render." A blog site will appear in the "Viewer" tab in RStudio.
 
+- [ ] On the "Build" tab in RStudio, press "Render Website."
+
 - [ ] Next step ... On GitHub.
 
     
@@ -97,28 +99,38 @@ You have now copied onto your clipboard text from GitHub that looks like @lst-pu
 
 - [ ] On the "Git" tab there will be a listing of files, each with a small checkbox on the left. Check all of the boxes. Then, press "Commit." This will create a pop-up with a place to edit a message. A good message for your first commit is "First commit". But you can put whatever you want. Then press the "Commit" button under your message.
 
-- [ ] Arrange to publish web pages via your GitHub repository. This facility is called "github pages." Much of the documentation for this is intended for people who have complicated needs. But an instructor's web site need not be complicated.
+- [ ] Another popup will appear. "Close" it to return to the previous pop-up where you had earlier entered your "commit" message. On that previous popup notice two buttons, one labelled "Push" and one labelled "Pull." Press "Pull" first then dismiss the resulting popup. Then press "Push."
 
-    - [ ] In your browser, go to the homepage of your repository. Using the running example, the URL will be `github.com/ProfessorSmith/Stat123`.
+You have now copied your (slightly) edited *quarto* blog project into your GitHub repository.
 
-    - [ ] There is a bright green button on your repository homepage. We won't need this until later. What we need at this step is the "Add File" button. Use this to "Create new file." This will bring you to another page where you can create the file.
+There is one more step ... Publishing via GitHub
+
+## Publishing via GitHub
+
+You are going to arrange to publish web pages via your GitHub repository. This facility is called "github pages." Much of the documentation for this is intended for people who have complicated needs. But an instructor's web site need not be complicated.
+
+- [ ] In your browser, go to the homepage of your repository. Using the running example, the URL will be `github.com/ProfessorSmith/Stat123`.
+
+
+- [ ] There is a "Settings" link in a menu bar near the top of the repository homepage. Click it. Then, in the menu on the left, go down to "Pages". In the page that appears ...
     
-    - [ ] There is an editing pane on the "Create new file" page. Just above it is the name of your repository followed by a slash: Stat123/ in our running example. Next to this is a "name your file ..." text entry area. Insert "docs/temp.html". Make sure to use "docs/". Then type some fill in the edit pane, for instance, "It's a nice day." Then press the bright green "Commit changes ..." button. This will pop up a window where there is a "Commit changes" button. Press it.
-    
-    - The point of this step is merely to create a `docs/` directory in your repository. Using that name makes it easier to work with the RStudio tool set, as you will see later.
+    a. Find the "branch" section. There is a button that will probably be labelled "none." When you click on it, you will be offered some selections. Choose "main."
+        
+    b. Next to the button from step (a), there will be a button with a file icon and that probably is labelled "/(root)". Change this to say, "/docs".
+        
+    c. Press the "Save" button next to the button that now says "/docs". 
+        
+A message will say, "Your project has been published to GitHub pages." There will be a URL that you can give your students to access the blog site on the web. It will look like this, but with your own user ID and repository name: `https://ProfessorSmith.github.io/Stat123`
 
-    - [ ] There is a "Settings" link in a menu bar near the top of the repository homepage. Click it. Then, in the menu on the left, go down to "Pages". In the page that appears ...
-    
-        a. Find the "branch" section. There is a button that will probably be labelled "none." When you click on it, you will be offered some selections. Choose "main."
-        
-        b. Next to the button from step (a), there will be a button with a file icon and that probably is labelled "/(root)". Change this to say, "/docs".
-        
-        c. Press the "Save" button next to the button that now says "/docs". 
-        
-- [ ] Return to the repository home page. (e.g. ProfessorSmith/Stat123). One way to do this is by pressing the "<> Code" item in the menu bar near the top of the page.
+## Congratulations!
 
-- [ ] One the home page is a bright green "<> Code" button that you saw earlier. Now we are going to use it. Click on it to open a popup labeled "clone." Make sure you are on the HTTPS tab in the popup. There will be a URL which contains your GitHub user name and the name of the repository. Something like "ProfessorSmith/Stats123.git". Copy that name to your browser. You are going to paste the name into RStudio in the next section.
+You're web site is set up (although it may take a few minutes to be accessible).
+
+Now you can create the documents that you want your students to see and deploy them to your site.
+
   
+<!--
+
 ## Back to RStudio
 
 - [ ] In the upper right corner of the RStudio window, there is a small dropdown menu. Select "New Project ..." then "Version Control" then "Git". The resulting pop-up window will have a text-entry field labelled "Repository URL." Paste into this field the URL you copied from the bright green button in GitHub. (This is "ProfessorSmith/Stats123.git" in our running example.) Then press "Create Project."
@@ -127,9 +139,16 @@ You have now copied onto your clipboard text from GitHub that looks like @lst-pu
 
     - In the RStudio menu bar on your computer, go to "Build" then "Configure Build Tools".
 
+- [ ] Return to the repository home page. (e.g. ProfessorSmith/Stat123). One way to do this is by pressing the "<> Code" item in the menu bar near the top of the page.
 
-<!--
+- [ ] One the home page is a bright green "<> Code" button that you saw earlier. Now we are going to use it. Click on it to open a popup labelled "clone." Make sure you are on the HTTPS tab in the popup. There will be a URL which contains your GitHub user name and the name of the repository. Something like "ProfessorSmith/Stats123.git". Copy that name to your browser. You are going to paste the name into RStudio in the next section.
 
 Your job is to add the third line. Spacing, spelling, and punctuation must not deviate from the above. Save the result.
+
+    - [ ] There is a bright green button on your repository homepage. We won't need this until later. What we need at this step is the "Add File" button. Use this to "Create new file." This will bring you to another page where you can create the file.
+    
+    - [ ] There is an editing pane on the "Create new file" page. Just above it is the name of your repository followed by a slash: Stat123/ in our running example. Next to this is a "name your file ..." text entry area. Insert "docs/temp.html". Make sure to use "docs/". Then type some fill in the edit pane, for instance, "It's a nice day." Then press the bright green "Commit changes ..." button. This will pop up a window where there is a "Commit changes" button. Press it.
+    
+    - The point of this step is merely to create a `docs/` directory in your repository. Using that name makes it easier to work with the RStudio tool set, as you will see later.
 
 -->

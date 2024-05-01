@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/WebR-on-github-pages/index.html",
       "/posts/WebR/index.html",
       "/posts/Trout-perch-allometrics/index.html",
       "/posts/WebR-getting-started/index.html",

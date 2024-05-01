@@ -124,4 +124,4 @@ The particular packages listed are those I use in the [*Lessons*](https://dtkapl
 
 ## Moving forward ...
 
-Once you have gained experience creating WebR *quarto* documents, you will want to learn how to deploy them to a web server so that your students can use them, too. If there is interest, that can be the subject of another post. 
+Once you have gained experience creating WebR *quarto* documents, you will want to learn how to deploy them to a web server so that your students can use them, too. That's a [multi-stage process to initialize](../WebR-on-github-pages), but much simpler in day-to-day use.
