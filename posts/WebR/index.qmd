@@ -6,26 +6,43 @@ categories: [LSTbook, computing, WebR]
 # Enable webR
 webr:
   channel-type: 'automatic'
-  packages: ['ggplot2', 'dplyr', 'LSTbook', 'ggformula', 'mosaicData', 'moderndive', 'palmerpenguins', 'stringdist', 'mosaicData' ]
+  packages: ['ggplot2', 'dplyr', 'LSTbook', 'ggformula', 'mosaicData', 'moderndive', 'palmerpenguins', 'babynames', 'stringdist', 'mosaicData']
 filters:
   - webr
 ---
 
-These notes concern writing student-facing documents with WebR, a full-featured version of R that runs in the student's browser. There are substantial advantages in doing this for the instructor:
+These notes are intended for instructors who want to get started or experiment with using WebR in their notes/assignments/etc. for students.
+WebR is a full-featured version of R that runs in the student's browser.
+
+::: {.callout-note}
+## Help refine this document
+
+This document is useful only insofar as instructors can make sense of it. If you find it confusing, please let me know so that I can fix it. Write to me at `kaplan@macalester.edu`.
+:::
+
+Using WebR has advantages both for the student and the instructor. 
 
 - Documents including computation are ordinary HTML (+  JavaScript) that can be posted on the web in straightforward ways.
 - There is no need to set up a server.
 - Computation can be positioned close to the text narrative that explains it or close to the exercise that a student is working on. 
 - Any packages required can be easily specified by the instructor and will be automatically loaded into the document's WebR session.
-- The interface is much simpler than RStudio. That said, the instructor herself will develop the documents using RStudio. And some instructors encourage students to write RMarkdown documents to record their work. 
+- The interface is much simpler than RStudio. That said, the instructor herself will develop the documents using RStudio. And some instructors encourage students to write RMarkdown documents to record their work. That doesn't work at all in WebR. 
 
-Here's an example of a WebR chunk ...
+The word "chunk" is used for a block of executable code embedded in a document. @lst-base-graphics is an example of a WebR chunk with an R statement pre-positioned inside. The R code can be edited or entirely replaced by the student working with the chunk. Press "Run Code" to carry out the computation.
 
-::: {lst-base-graphics}
+::: {#lst-base-graphics}
 ```{webr-r}
 plot(mpg ~ wt, data = mtcars)
 ```
 :::
+
+The markup to create a chunk is very simple. For the above chunk it is
+
+````markdown
+```{webr-r}
+plot(mpg ~ wt, data = mtcars)
+```
+````
 
 ::: {.callout-note}
 ## `{ggplot2}` and related graphics.
@@ -65,7 +82,7 @@ There's an excellent [four-minute video](https://youtu.be/DoRR2S5lLvk?t=5) by Ja
 
 Take care to note what is clearly shown at time 1:38 in the video, the very brief use of the **terminal** (as opposed to the R console) to give the command up the RStudio project to use WebR. 
 
-```
+```rmarkdown
 quarto add coatless/quarto-webr
 ```
 
@@ -79,9 +96,10 @@ The *Coatless Professor* provides more links to information [on this GitHub web 
 
 The *Coatless Professor* video shows you the very few steps needed to set up your document for WebR. I want to elaborate just a little bit.
 
-At the top of the example document there is a header, delimited by lines with `---`, that contains information used by the *quarto* system. This information is written in a format called "YAML." Keep that name in mind.
+At the top of the example document there is a header, delimited by lines with `---`, that contains information used by the *quarto* system. This information is written in a format called "YAML." Keep that name in mind. 
 
-```
+```{verbatim}
+#| code-copy: true
 ---
 title: webR in Quarto HTML Documents
 format: html
@@ -93,14 +111,17 @@ filters:
 
 You're free to edit the title, but leave the other items alone. YAML is very sensitive to formatting errors.
 
-The example document sets up a WebR session using base R. Many instructors will want to access R packages. To set up the document to do this automatically, add the following to the YAML header (inside the `---` delimiters):
+The example document sets up a WebR session using base R. Many instructors will want to access R packages. To set up the document to do this automatically, add the following to the YAML header (inside the `---` delimiters). (Use the <i class="bi bi-clipboard) to copy the contents to the clipboard before pasting into your *quarto* document.)
 
-```
+``` {r eval=FALSE}
+#| code-copy: true
 webr:
   channel-type: 'automatic'
-  packages: ['ggplot2', 'dplyr', 'LSTbook', 'ggformula', 'moderndive', 'palmerpenguins', 'stringdist', 'mosaicData' ]
+  packages: ['ggplot2', 'dplyr', 'LSTbook', 'ggformula', 'mosaicData', 'moderndive', 'palmerpenguins', 'babynames', 'stringdist', 'mosaicData']
 ```
 
 The particular packages listed are those I use in the [*Lessons*](https://dtkaplan.github.io/Lessons-in-statistical-thinking) book. You may want to exclude some of these or include others (such as the `{mosaic}` package.) For those packages listed, you will not have to use the `library()` command in your WebR document. Neither do you need to `install.packages()`, this happens automatically. (Note that you can use `library()` in a WebR chunk, if that suits your pedagogy.)
 
+## Moving forward ...
 
+Once you have gained experience creating WebR *quarto* documents, you will want to learn how to deploy them to a web server so that your students can use them, too. If there is interest, that can be the subject of another post. 

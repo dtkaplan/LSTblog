@@ -22,6 +22,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -212,7 +246,7 @@ ul.task-list li input[type="checkbox"] {
 // Document level settings ----
 
 // Determine if we need to install R packages
-globalThis.qwebrInstallRPackagesList = ['ggplot2', 'dplyr', 'LSTbook', 'ggformula', 'mosaicData', 'moderndive', 'palmerpenguins', 'stringdist', 'mosaicData'];
+globalThis.qwebrInstallRPackagesList = ['ggplot2', 'dplyr', 'LSTbook', 'ggformula', 'mosaicData', 'moderndive', 'palmerpenguins', 'babynames', 'stringdist', 'mosaicData'];
 
 // Specify possible locations to search for the repository
 globalThis.qwebrPackageRepoURLS = ['https://repo.r-wasm.org/'];
@@ -234,7 +268,7 @@ globalThis.qwebrCustomizedWebROptions = {
 };
 
 // Store cell data
-globalThis.qwebrCellDetails = [{"id":1,"options":{"output":"true","fig-cap":"","comment":"","label":"unnamed-chunk-1","autorun":"false","out-width":"700px","results":"markup","warning":"true","context":"interactive","classes":"","read-only":"false","dpi":72,"message":"true","fig-height":5,"out-height":"","fig-width":7},"code":"plot(mpg ~ wt, data = mtcars)"},{"id":2,"options":{"output":"true","fig-cap":"","comment":"","label":"unnamed-chunk-2","autorun":"false","out-width":"700px","results":"markup","warning":"true","context":"interactive","classes":"","read-only":"false","dpi":72,"message":"true","fig-height":5,"out-height":"","fig-width":7},"code":"mtcars |> \n  ggplot(aes(x = wt, y = mpg)) + \n  geom_point(color = \"blue\")"},{"id":3,"options":{"output":"true","fig-cap":"","comment":"","label":"unnamed-chunk-3","autorun":"false","out-width":"700px","results":"markup","warning":"true","context":"interactive","classes":"","read-only":"false","dpi":72,"message":"true","fig-height":5,"out-height":"","fig-width":7},"code":"mtcars |> gf_point(mpg ~ wt, color = \"brown\")"},{"id":4,"options":{"output":"true","fig-cap":"","comment":"","label":"unnamed-chunk-4","autorun":"false","out-width":"700px","results":"markup","warning":"true","context":"interactive","classes":"","read-only":"false","dpi":72,"message":"true","fig-height":5,"out-height":"","fig-width":7},"code":"mtcars |> point_plot(mpg ~ wt, annot = \"model\")"}];
+globalThis.qwebrCellDetails = [{"id":1,"code":"plot(mpg ~ wt, data = mtcars)","options":{"context":"interactive","warning":"true","comment":"","results":"markup","label":"unnamed-chunk-1","out-height":"","output":"true","message":"true","out-width":"700px","dpi":72,"fig-width":7,"read-only":"false","fig-height":5,"autorun":"false","fig-cap":"","classes":""}},{"id":2,"code":"mtcars |> \n  ggplot(aes(x = wt, y = mpg)) + \n  geom_point(color = \"blue\")","options":{"context":"interactive","warning":"true","comment":"","results":"markup","label":"unnamed-chunk-2","out-height":"","output":"true","message":"true","out-width":"700px","dpi":72,"fig-width":7,"read-only":"false","fig-height":5,"autorun":"false","fig-cap":"","classes":""}},{"id":3,"code":"mtcars |> gf_point(mpg ~ wt, color = \"brown\")","options":{"context":"interactive","warning":"true","comment":"","results":"markup","label":"unnamed-chunk-3","out-height":"","output":"true","message":"true","out-width":"700px","dpi":72,"fig-width":7,"read-only":"false","fig-height":5,"autorun":"false","fig-cap":"","classes":""}},{"id":4,"code":"mtcars |> point_plot(mpg ~ wt, annot = \"model\")","options":{"context":"interactive","warning":"true","comment":"","results":"markup","label":"unnamed-chunk-4","out-height":"","output":"true","message":"true","out-width":"700px","dpi":72,"fig-width":7,"read-only":"false","fig-height":5,"autorun":"false","fig-cap":"","classes":""}}];
 
 </script>
 <script type="module">
@@ -1210,19 +1244,44 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 
 
 
-<p>These notes concern writing student-facing documents with WebR, a full-featured version of R that runs in the student’s browser. There are substantial advantages in doing this for the instructor:</p>
+<p>These notes are intended for instructors who want to get started or experiment with using WebR in their notes/assignments/etc. for students. WebR is a full-featured version of R that runs in the student’s browser.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Help refine this document
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This document is useful only insofar as instructors can make sense of it. If you find it confusing, please let me know so that I can fix it. Write to me at <code>kaplan@macalester.edu</code>.</p>
+</div>
+</div>
+<p>Using WebR has advantages both for the student and the instructor.</p>
 <ul>
 <li>Documents including computation are ordinary HTML (+ JavaScript) that can be posted on the web in straightforward ways.</li>
 <li>There is no need to set up a server.</li>
 <li>Computation can be positioned close to the text narrative that explains it or close to the exercise that a student is working on.</li>
 <li>Any packages required can be easily specified by the instructor and will be automatically loaded into the document’s WebR session.</li>
-<li>The interface is much simpler than RStudio. That said, the instructor herself will develop the documents using RStudio. And some instructors encourage students to write RMarkdown documents to record their work.</li>
+<li>The interface is much simpler than RStudio. That said, the instructor herself will develop the documents using RStudio. And some instructors encourage students to write RMarkdown documents to record their work. That doesn’t work at all in WebR.</li>
 </ul>
-<p>Here’s an example of a WebR chunk …</p>
-<div class="{lst-base-graphics}">
+<p>The word “chunk” is used for a block of executable code embedded in a document. <a href="#lst-base-graphics" class="quarto-xref">Listing&nbsp;1</a> is an example of a WebR chunk with an R statement pre-positioned inside. The R code can be edited or entirely replaced by the student working with the chunk. Press “Run Code” to carry out the computation.</p>
+<div id="lst-base-graphics" class="listing quarto-float">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst quarto-uncaptioned" id="lst-base-graphics-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Listing&nbsp;1
+</figcaption>
+<div aria-describedby="lst-base-graphics-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div id="qwebr-insertion-location-1"></div>
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 </div>
+</figure>
+</div>
+<p>The markup to create a chunk is very simple. For the above chunk it is</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr-r}</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="in">plot(mpg ~ wt, data = mtcars)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1233,7 +1292,7 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>In <strong>?@lst-base-graphics</strong> I have used base R graphics just for the convenience of the reader. You can also use <code>{ggplot2}</code> graphics, perhaps with the <code>{ggformula}</code> interface. To demonstrate this, here are some more webr chunks. You could equally well paste their contents into the previous chunk.</p>
+<p>In <a href="#lst-base-graphics" class="quarto-xref">Listing&nbsp;1</a> I have used base R graphics just for the convenience of the reader. You can also use <code>{ggplot2}</code> graphics, perhaps with the <code>{ggformula}</code> interface. To demonstrate this, here are some more webr chunks. You could equally well paste their contents into the previous chunk.</p>
 <div id="qwebr-insertion-location-2"></div>
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 <p><code>{ggformula}</code> graphics:</p>
@@ -1255,7 +1314,7 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 <h2 class="anchored" data-anchor-id="producing-your-first-document">Producing your first document</h2>
 <p>There’s an excellent <a href="https://youtu.be/DoRR2S5lLvk?t=5">four-minute video</a> by James Balamuta, the <em>Coatless Professor</em>. This covers just about everything you need to get started (once you have installed <em>quarto</em> and RStudio), including creating an RStudio project and a <em>quarto</em> document.</p>
 <p>Take care to note what is clearly shown at time 1:38 in the video, the very brief use of the <strong>terminal</strong> (as opposed to the R console) to give the command up the RStudio project to use WebR.</p>
-<pre><code>quarto add coatless/quarto-webr</code></pre>
+<pre class="rmarkdown"><code>quarto add coatless/quarto-webr</code></pre>
 <p>You can create many documents within one project. You only have to do the <code>quarto add ...</code> once for each project. After that, you work only in RStudio.</p>
 <p>The <em>Coatless Professor</em>’s video brings you all the way through displaying a working WebR document in the RStudio “Viewer” tab. But you can equally well open the document in a browser. (On the Viewer tab menu bar, click the “Show in New Window” button, which looks like a sheet of paper with an upward-facing arrow.)</p>
 <p>The <em>Coatless Professor</em> provides more links to information <a href="https://github.com/coatless/quarto-webr?tab=readme-ov-file">on this GitHub web page</a>. Those not familiar with GitHub may be put off by the material at the top of the page. Simply scroll down until you get to the part that looks like an ordinary web page.</p>
@@ -1264,19 +1323,25 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 <h2 class="anchored" data-anchor-id="editing-your-document">Editing your document</h2>
 <p>The <em>Coatless Professor</em> video shows you the very few steps needed to set up your document for WebR. I want to elaborate just a little bit.</p>
 <p>At the top of the example document there is a header, delimited by lines with <code>---</code>, that contains information used by the <em>quarto</em> system. This information is written in a format called “YAML.” Keep that name in mind.</p>
-<pre><code>---
-title: webR in Quarto HTML Documents
-format: html
-engine: knitr
-filters:
-  - webr
----</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>title: webR in Quarto HTML Documents</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>format: html</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>engine: knitr</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>filters:</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  - webr</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>---</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>You’re free to edit the title, but leave the other items alone. YAML is very sensitive to formatting errors.</p>
-<p>The example document sets up a WebR session using base R. Many instructors will want to access R packages. To set up the document to do this automatically, add the following to the YAML header (inside the <code>---</code> delimiters):</p>
-<pre><code>webr:
-  channel-type: 'automatic'
-  packages: ['ggplot2', 'dplyr', 'LSTbook', 'ggformula', 'moderndive', 'palmerpenguins', 'stringdist', 'mosaicData' ]</code></pre>
+<p>The example document sets up a WebR session using base R. Many instructors will want to access R packages. To set up the document to do this automatically, add the following to the YAML header (inside the <code>---</code> delimiters). (Use the &lt;i class=“bi bi-clipboard) to copy the contents to the clipboard before pasting into your <em>quarto</em> document.)</p>
+<div class="cell" data-code-copy="true">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>webr<span class="sc">:</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  channel<span class="sc">-</span>type<span class="sc">:</span> <span class="st">'automatic'</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  packages<span class="sc">:</span> [<span class="st">'ggplot2'</span>, <span class="st">'dplyr'</span>, <span class="st">'LSTbook'</span>, <span class="st">'ggformula'</span>, <span class="st">'mosaicData'</span>, <span class="st">'moderndive'</span>, <span class="st">'palmerpenguins'</span>, <span class="st">'babynames'</span>, <span class="st">'stringdist'</span>, <span class="st">'mosaicData'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>The particular packages listed are those I use in the <a href="https://dtkaplan.github.io/Lessons-in-statistical-thinking"><em>Lessons</em></a> book. You may want to exclude some of these or include others (such as the <code>{mosaic}</code> package.) For those packages listed, you will not have to use the <code>library()</code> command in your WebR document. Neither do you need to <code>install.packages()</code>, this happens automatically. (Note that you can use <code>library()</code> in a WebR chunk, if that suits your pedagogy.)</p>
+</section>
+<section id="moving-forward" class="level2">
+<h2 class="anchored" data-anchor-id="moving-forward">Moving forward …</h2>
+<p>Once you have gained experience creating WebR <em>quarto</em> documents, you will want to learn how to deploy them to a web server so that your students can use them, too. If there is interest, that can be the subject of another post.</p>
 
 
 </section>
