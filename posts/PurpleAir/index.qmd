@@ -1,0 +1,275 @@
+---
+title: "Exploring Air Quality"
+author: "Daniel Kaplan"
+date: "2024-05-15"
+categories: [LSTbook, computing]
+output:
+  html_document:
+    css: "styles.css"
+# Enable webR
+webr:
+  channel-type: 'automatic'
+  packages: ['ggplot2', 'dplyr', 'LSTbook', 'ggformula', 'mosaicData', 'moderndive', 'palmerpenguins', 'babynames', 'stringdist', "lubridate" ]
+filters:
+  - webr
+---
+
+```{r include=FALSE}
+library(LSTbook)
+library(dygraphs)
+load("DenverAQI.rda") # Only for compiling this document.
+# For the interface to R, the same file will be read from a website.
+# See the next webr-r chunk.
+DenverAQI <- DenverAQI |>
+  select(-voc) |> # no data on voc
+  mutate(time_stamp = lubridate::ymd_hms(time_stamp),
+         tod = (lubridate::hour(time_stamp) - 6) %% 24) |>
+  dplyr::rename(pm0.3 = X0.3_um_count, 
+         pm2.5 = X2.5_um_count,
+         pm5.0 = X5.0_um_count,
+         pm10 = X10.0_um_count) 
+Breakpoints_pm <- tibble::tribble(
+  ~pm2.5, ~pm10, ~aqi,
+  0, 0, 0,
+  12, 54, 50,
+  35.4, 154, 100,
+  55.5, 255, 150,
+  150.5, 355, 201,
+  250.5, 425, 301,
+  350.5, 505, 401,
+  500.4, 604, 500
+)
+aqi2.5 <- with(Breakpoints_pm,
+               approxfun(pm2.5, aqi))
+aqi10 <- with(Breakpoints_pm,
+               approxfun(pm10, aqi))
+aqi_levels <- function(aqi, colors = FALSE) {
+  aqi_levels <- c("good", "moderate", "unhealthy sensitive",
+                  "unhealthy", "very unhealthy", "hazardous")
+  if (colors) aqi_levels <- c("green", "yellow", "orange",
+                              "red", "purple", "maroon")
+  cut(aqi, 
+      c(0, 50, 100, 150, 200, 300, 500 ),
+      labels = aqi_levels,
+      right = TRUE)
+}
+DenverAQI <- DenverAQI |>
+  mutate(aqi_2.5 = round(aqi2.5(pm2.5)),
+         aqi_10  = round(aqi10(pm10)))
+```
+
+```{webr-r}
+#| context: setup
+#| echo: false
+load(url("https://www.mosaic-web.org/go/datasets/DenverAQI.rda"))
+DenverAQI <- DenverAQI |>
+  select(-voc) |>
+  mutate(time_stamp = lubridate::ymd_hms(time_stamp),
+         tod = (lubridate::hour(time_stamp) - 6) %% 24) |>
+  dplyr::rename(pm0.3 = X0.3_um_count,
+         pm2.5 = X2.5_um_count,
+         pm5.0 = X5.0_um_count,
+         pm10 = X10.0_um_count)
+Breakpoints_pm <- tibble::tribble(
+  ~pm2.5, ~pm10, ~aqi,
+  0, 0, 0,
+  12, 54, 50,
+  35.4, 154, 100,
+  55.5, 255, 150,
+  150.5, 355, 201,
+  250.5, 425, 301,
+  350.5, 505, 401,
+  500.4, 604, 500
+)
+aqi2.5 <- with(Breakpoints_pm,
+               approxfun(pm2.5, aqi))
+aqi10 <- with(Breakpoints_pm,
+               approxfun(pm10, aqi))
+aqi_levels <- function(aqi, colors = FALSE) {
+  aqi_levels <- c("good", "moderate", "unhealthy sensitive",
+                  "unhealthy", "very unhealthy", "hazardous")
+  if (colors) aqi_levels <- c("green", "yellow", "orange",
+                              "red", "purple", "maroon")
+  cut(aqi,
+      c(0, 50, 100, 150, 200, 300, 500 ),
+      labels = aqi_levels,
+      right = TRUE)
+}
+DenverAQI <- DenverAQI |>
+  mutate(aqi_2.5 = round(aqi2.5(pm2.5)),
+         aqi_10  = round(aqi10(pm10)))
+```
+
+Depending where you live, you may have encountered "air quality alerts," notifications by the authorities that air pollution has reached a level considered unhealthy or even hazardous. In this activity, you will explore air quality data from Denver, Colorado from late 2022 to mid-2024.
+
+An *air quality monitor* is a device using techologies like laser scattering to count small particles in the air passing through. They are sometimes connected to the internet. The data we will use was collected by such a device. Each hour over the time interval covered, a record was made of counts of particles of various sizes: 0.3 $\mu$m, 2.5 $\mu$m, and 10 $\mu$m. In addition, other meteorlogical data was recorded, such as air temperature and air pressure.
+
+Here are a few rows of the data, covering just 48 hours.
+
+```{r echo=FALSE, results="asis"}
+DenverAQI |> 
+  select(time_stamp, temperature, humidity, pressure, aqi_10, aqi_2.5) |>
+head(49) |> DT::datatable()
+```
+
+You can see that the first record was made on October 17, 2022 at 19:00Z. (The Z refers to the time zone.) The second was made an hour later, and so on. There are 12,745 rows altogether.
+
+## Temperature, pressure, humidity
+
+Let's look at the most common measures of weather: temperature, humidity, and pressure. It's hard to look directly at the numbers recorded. A graphical display is easier to make sense of. 
+
+
+::: {#fig-denver-weather }
+```{r echo=FALSE}
+DenverAQI |> select(time_stamp, temperature) |>
+  dygraph(height = 200, width=700, group = "weather", main = "Temperature (F)")
+DenverAQI |> select(time_stamp, humidity) |>
+  dygraph(height = 200, width=700, group = "weather", main="Humidity (%)")
+DenverAQI |> select(time_stamp, pressure) |>
+  dygraph(height = 200, width=700, group = "weather", main="Air pressure (millibar)")
+DenverAQI |> select(time_stamp, tod) |>
+  mutate(tod = 12 - 12 * cos(2*pi*tod/24)) |>
+  dygraph(height = 100, width=700, group = "weather") |>
+  dyRangeSelector(dateWindow = c("2024-01-01", "2024-04-30")) |>
+  dyHighlight(
+    highlightCircleSize = 5, 
+    highlightSeriesBackgroundAlpha = 0.2,
+    hideOnMouseOut = FALSE)
+```
+
+Outdoor temperature, humidity, and air pressure. Noon is marked as the high point in the sinusoidal trace at the bottom.
+
+:::
+
+
+
+Outdoor temperature, humidity, and air pressure. 
+
+i. Play with the controls of the graph to zoom in and out and to see how to read the numerical values at any point in time.
+
+     a. The air pressure reading must be multiplied by ten to get the millibar reading. Typically, air pressure at sea level is around 1010 millibar. Why is the Denver reading different?
+     
+     b. To help you keep track of the days, a purple oscillating line has been added to the graph with a period of 24 hours. 
+     
+         1. Zoom in so that the graph shows 20-30 days.  A "diurnal" variation refers to changes that go up and down on a daily basis. By looking at the traces, can you see diurnal variation in air temperature? Humidity? Pressure?
+         
+         2. Zoom out so that the graph shows roughly half a year. What does the diurnal variation look like at this scale?
+         
+ii. There is a gap in the data. How long does the gap last? What are the starting and ending dates of the gap?
+
+
+## Particulate matter
+
+```{r echo=FALSE}
+DenverAQI |> 
+  select(time_stamp, aqi_2.5) |>
+  dygraph(group = "pm", main = "AQI 2.5", height = 200, width = 700) 
+DenverAQI |> 
+  select(time_stamp, aqi_10) |>
+  dygraph(group = "pm", main = "AQI 10", height = 200, width=700)
+DenverAQI |> 
+  select(time_stamp, tod) |>
+  mutate(tod = 12 - 12 * cos(2*pi*tod/24)) |>
+  dygraph(group = "pm", height=120, width = 700) |>
+dyRangeSelector(dateWindow = c("2024-01-01", "2024-04-30"))
+
+```
+
+1. Times of very high pm2.5. Find an episode of high pm2.5 that lasts a day or more.
+
+
+<!-------------
+
+- Denver, Colorado sensor 167445, <div id='PurpleAirWidget_167445_module_AQI_conversion_C0_average_10_layer_standard'>Loading PurpleAir Widget...</div>
+<script src='https://www.purpleair.com/pa.widget.js?key=Y3JWJJKJDNGZJF0I&module=AQI&conversion=C0&average=10&layer=standard&container=PurpleAirWidget_167445_module_AQI_conversion_C0_average_10_layer_standard'></script>
+
+--------------->
+
+## Background on AQI
+
+See [this EPA document](https://www.airnow.gov/sites/default/files/2020-05/aqi-technical-assistance-document-sept2018.pdf). My conclusions from a quick read ...
+
+- Calculated separately for each pollutant.
+- EPI gives a range of values for each category (e.g. unhealthy, hazardous)
+- I'm thinking that this is just a linear spline.
+- For all the pollutants covered, take the one with the maximum API (not an average, etc.)
+
+EXERCISES: 
+
+1. Is there a significant correlation between temperature and pressure? Is it substantial.
+2. Find confidence interval on the slope.
+3. What do you think R^2^ will be?
+
+
+```{webr-r}
+DenverAQI |> 
+  point_plot(pressure ~ temperature, annot="model", 
+             point_ink = 0.05)
+```
+
+These labels come from the [US EPA](https://molekule.com/blogs/all/what-is-pm-2-5-and-how-can-you-reduce-your-exposure#:~:text=Particles%20that%20are%202.5%20microns,enter%20deeper%20into%20our%20bodies.)
+
+
+There's a time stamp. Do you think it is in the Denver time zone? How would you tell? 
+
+::: {.callout-note collapse=true}
+## Time zone
+
+Low temperature is consistently in hour 12. Ordinarily, one expects it to be in the very early morning, say 6am. So it looks like the time stamp is six hours later than the actual time in Denver. Look up Zulu time.
+
+:::
+
+
+Simple statistics: min, max, median, mean, variance
+
+Q: are `visual_range` and `scattering_coefficient` more or less telling the same story.
+
+Q. Which of the counts is most strongly related to `visual_range`: 0.3, 2.5, 5.0, 10.5?
+
+Rank statistics: Assign to each row it's quantile in the AQI index.
+
+Correlation: Which other variables correlate most strongly with X0.3_um_count?
+
+Pattern finding: Pick two of the variables that you think would be telling and plot one versus the other, using the rank AQI for color. Can you see any patterns.
+
+Explore the time series in an interactive graph. Does high particle count happen in a particular time of year? Find a date range where the count is above 11,000. Does the count at this times depend on the time of day? 
+
+Then we will move to point plots that compare two or more variables.
+
+```{r}
+DenverAQI |> select(time_stamp, pm2.5, pm10, tod) |> 
+  mutate(pm2.5 = rank(pm2.5), pm10 = rank(pm10), 
+         tod = 10 + 10 * sin(2*pi*((tod-6) %% 24)/24)) |>
+  
+  dygraph() |>
+  dyRangeSelector(dateWindow = c("2024-01-01", "2024-04-30")) |>
+  dyHighlight(highlightCircleSize = 5, 
+              highlightSeriesBackgroundAlpha = 0.2,
+              hideOnMouseOut = FALSE)
+```
+
+
+
+```{r}
+DenverAQI |> select(time_stamp, temperature, humidity, pressure, tod) |> 
+  mutate(
+    pressure = pressure/10, 
+    tod = 0 + 10 * sin(2*pi*((tod-6) %% 24)/24)) |>
+  dygraph() |>
+  dyRangeSelector(dateWindow = c("2024-01-01", "2024-04-30")) |>
+  dyHighlight(
+    highlightCircleSize = 5, 
+    highlightSeriesBackgroundAlpha = 0.2,
+    hideOnMouseOut = FALSE)
+```
+
+```{webr-r}
+plot(mpg ~ wt, data = mtcars)
+```
+
+::: {.callout-note collapse=true}
+## Haziness
+
+A high `scattering_coefficient` is associated with poor air quality. That is, haziness is a good sign of poor air quality.
+:::
+

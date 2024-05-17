@@ -2,7 +2,9 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/PurpleAir/index.html",
       "/posts/WebR-on-github-pages/index.html",
+      "/posts/WebR-getting-started/Instructor-notes-index.html",
       "/posts/WebR/index.html",
       "/posts/Trout-perch-allometrics/index.html",
       "/posts/WebR-getting-started/index.html",

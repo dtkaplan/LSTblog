@@ -55,5 +55,11 @@
   },
   "posts/WebR-on-github-pages/index.qmd": {
     "index.html": "c5fbdd38"
+  },
+  "posts/PurpleAir/index.qmd": {
+    "index.html": "dc8978fe"
+  },
+  "posts/WebR-getting-started/Instructor-notes-index.qmd": {
+    "Instructor-notes-index.html": "6ad12756"
   }
 }

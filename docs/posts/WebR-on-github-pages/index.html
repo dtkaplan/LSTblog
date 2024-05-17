@@ -9,7 +9,7 @@
 <meta name="author" content="Daniel Kaplan">
 <meta name="dcterms.date" content="2024-05-01">
 
-<title>Instructor Blog for Lessons in Statistical Thinking - Deploying WebR Documents via GitHub</title>
+<title>Instructor Blog for Lessons in Statistical Thinking - Air Quality data from Colorado</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -110,7 +110,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Deploying WebR Documents via GitHub</h1>
+      <h1 class="title">Air Quality data from Colorado</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">LSTbook</div>
                 <div class="quarto-category">computing</div>
@@ -150,145 +150,21 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p>The goal of this document is to set you up to publish your own WebR documents for your course(s).</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Pre-requisites
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>You should already have reached the point where you can author a WebR document on your computer and view it in your browser. See the <a href="../WebR/"><em>Instructor’s Guide to Starting with WebR</em></a>.</p>
-</div>
-</div>
-<p>Once you know how to create a WebR document, the next step is to make that document (and others) available to your students. We will describe one way, which is free, flexible, widely used, and integrates well with the creation of <em>quarto</em> documents in RStudio.</p>
-<p>There are several steps, some of which you may already be familiar with. If so, just check off such steps in the following lists.</p>
-<section id="rstudio" class="level2">
-<h2 class="anchored" data-anchor-id="rstudio">RStudio</h2>
-<ul class="task-list">
-<li><p><label><input type="checkbox">Install R and RStudio. They are separate programs that interact with each other. There are many instructions on the web.</label></p></li>
-<li><p><label><input type="checkbox">Install “git”, which is software that keeps track of documents and is the main way RStudio talks to the system we use in the next section, “On GitHub” <a href="#sec-on-github" class="quarto-xref">2</a>. Get instructions for this via a web search for “RStudio install git”. I like this page: <a href="https://happygitwithr.com/install-git.html">“Happy Git and GitHub for the useR”</a>. The installation process depends on your operating system.</label></p></li>
-<li><p><label><input type="checkbox">Open RStudio. (If it was already open, close it and open it again.)</label></p></li>
-<li><p><label><input type="checkbox">At the top right of the RStudio window is a dropdown menu. Select “New Project …” then “New Directory”. You will be presented with a list of project types. Select “Quarto Blog.” [After we gain some experience from instructors who use these instructions, we suggest a different project type.]</label></p>
+<p>We’ve got data from two Air Quality Index sensors</p>
 <ul>
-<li><p>Choose a simple directory name for the project, for instance the name of the course you are going to work on, e.g.&nbsp;“Stats123.” (Later, you will use this same name for the repository you set up on GitHub.) It’s wise to avoid spaces in the name.</p></li>
-<li><p>Press “Create Project.” RStudio will reshape itself. In the editor pane there will be two documents: <code>index.html</code> and <code>quarto.yml</code>.</p>
-<ul>
-<li>In the <code>index.html</code> file, edit the title to something appropriate for your purposes and save the result.</li>
-<li>In addition, edit the <code>quarto.yml</code> file slightly. Again, there is a title field that you can change, but there is another change you need to make. At the top of the <code>quarto.yml</code> file are the first two lines of the text in <a href="#lst-set-up-docs" class="quarto-xref">Listing&nbsp;1</a>: Your job is to add the third line. Spacing, spelling, and punctuation must not deviate from the above. Save the result.</li>
-</ul></li>
-</ul></li>
-</ul>
-<div id="lst-set-up-docs" class="listing quarto-float">
-<figure class="quarto-float quarto-float-lst figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-set-up-docs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Listing&nbsp;1: What the top of your <code>quarto.yml</code> file should look like.
-</figcaption>
-<div aria-describedby="lst-set-up-docs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<pre id="lst-set-up-docs"><code>project:
-  type: website
-  output-dir: docs</code></pre>
+<li>Denver, Colorado sensor 167445,
+<div id="PurpleAirWidget_167445_module_AQI_conversion_C0_average_10_layer_standard">
+Loading PurpleAir Widget…
 </div>
-</figure>
+<script src="https://www.purpleair.com/pa.widget.js?key=Y3JWJJKJDNGZJF0I&amp;module=AQI&amp;conversion=C0&amp;average=10&amp;layer=standard&amp;container=PurpleAirWidget_167445_module_AQI_conversion_C0_average_10_layer_standard"></script></li>
+<li>Thornton, Colorado, sensor 187119
+<div id="PurpleAirWidget_187119_module_AQI_conversion_C0_average_10_layer_standard">
+Loading PurpleAir Widget…
 </div>
-<ul class="task-list">
-<li><p><label><input type="checkbox">Go back to the <code>index.html</code> file and press “Render.” A blog site will appear in the “Viewer” tab in RStudio.</label></p></li>
-<li><p><label><input type="checkbox">On the “Build” tab in RStudio, press “Render Website.”</label></p></li>
-<li><p><label><input type="checkbox">Next step … On GitHub.</label></p></li>
+<script src="https://www.purpleair.com/pa.widget.js?key=BJF7JS2PZLOENSR4&amp;module=AQI&amp;conversion=C0&amp;average=10&amp;layer=standard&amp;container=PurpleAirWidget_187119_module_AQI_conversion_C0_average_10_layer_standard"></script></li>
 </ul>
-</section>
-<section id="sec-on-github" class="level2">
-<h2 class="anchored" data-anchor-id="sec-on-github">On GitHub</h2>
-<ul class="task-list">
-<li><p><label><input type="checkbox">Get a <a href="github.com">GitHub account</a>. This is free. GitHub is used by millions of people. Here is the <a href="https://docs.github.com/en/get-started/onboarding/getting-started-with-your-github-account">documentation for setting up an account</a>. The “free” level of account will be entirely satisfactory for most instructors. Start with that.</label></p>
-<ul>
-<li>For the present, don’t worry about “learning Git.” That can come later, through experience.</li>
-<li>For the purpose of a running example, imagine that your account is named “ProfessorSmith”.</li>
-</ul></li>
-<li><p><label><input type="checkbox">Go to your GitHub home page. The URL will be (in our example) “github.com/ProfessorSmith”. There will be a bright green button labelled “New.” Press it to start the process of creating a new repository, via a page appropriately entitled “Create a New Repository.” [Note: Eventually, but not now, you will likely have several repositories, for example, one for each course.]</label></p>
-<ul>
-<li>For the purpose of the running example, suppose that your repository is to be named “Stat123”.</li>
-</ul></li>
-<li><p><label><input type="checkbox">On the “Create a New Repository” page, enter the name for your repo: “Stat123” in our example. Leave the other fields alone. Then press the green “Create Repository” button. The result will be a new page with the heading “Quick Setup—if you’ve done this kind of thing before.”</label></p></li>
-<li><p><label><input type="checkbox">One the “Quick Setup” page, there is a section labelled “… or create a new repository on the command line.” Underneath it is code, which will look like the following but will have your own user name and repository name instead of the “ProfessorSmith” and “Stat123” we are using for an example.</label></p></li>
-</ul>
-<div id="lst-push-to-remote" class="listing quarto-float">
-<figure class="quarto-float quarto-float-lst figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-push-to-remote-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Listing&nbsp;2: The text you will be copying from the “Quick Setup” page will look like this, but with your own user name and repository name.
-</figcaption>
-<div aria-describedby="lst-push-to-remote-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<pre id="lst-push-to-remote"><code>echo "# stat123" &gt;&gt; README.md
-git init
-git add README.md
-git commit -m "first commit"
-git branch -M main
-git remote add origin https://github.com/ProfessorSmith/stat123.git
-git push -u origin main</code></pre>
-</div>
-</figure>
-</div>
-</section>
-<section id="back-to-rstudio" class="level2">
-<h2 class="anchored" data-anchor-id="back-to-rstudio">Back to RStudio</h2>
-<p>You have now copied onto your clipboard text from GitHub that looks like <a href="#lst-push-to-remote" class="quarto-xref">Listing&nbsp;2</a>. Now go back to your <em>quarto</em> blog project (“Stat123”) that you created previously.</p>
-<ul class="task-list">
-<li><p><label><input type="checkbox">Move to the “Terminal” tab that is in the same pane as “Console.”</label></p></li>
-<li><p><label><input type="checkbox">Paste the text (as in <a href="#lst-push-to-remote" class="quarto-xref">Listing&nbsp;2</a>) that you earlier copied from GitHub to your clipboard. Press return. Stuff will happen.</label></p></li>
-<li><p><label><input type="checkbox">Close RStudio and re-open it again. Now there will be a “Git” tab in the same Pane as “Files,” “Plots,” etc. Go to the “Git” tab.</label></p></li>
-<li><p><label><input type="checkbox">On the “Git” tab there will be a listing of files, each with a small checkbox on the left. Check all of the boxes. Then, press “Commit.” This will create a pop-up with a place to edit a message. A good message for your first commit is “First commit”. But you can put whatever you want. Then press the “Commit” button under your message.</label></p></li>
-<li><p><label><input type="checkbox">Another popup will appear. “Close” it to return to the previous pop-up where you had earlier entered your “commit” message. On that previous popup notice two buttons, one labelled “Push” and one labelled “Pull.” Press “Pull” first then dismiss the resulting popup. Then press “Push.”</label></p></li>
-</ul>
-<p>You have now copied your (slightly) edited <em>quarto</em> blog project into your GitHub repository.</p>
-<p>There is one more step … Publishing via GitHub</p>
-</section>
-<section id="publishing-via-github" class="level2">
-<h2 class="anchored" data-anchor-id="publishing-via-github">Publishing via GitHub</h2>
-<p>You are going to arrange to publish web pages via your GitHub repository. This facility is called “github pages.” Much of the documentation for this is intended for people who have complicated needs. But an instructor’s web site need not be complicated.</p>
-<ul class="task-list">
-<li><p><label><input type="checkbox">In your browser, go to the homepage of your repository. Using the running example, the URL will be <code>github.com/ProfessorSmith/Stat123</code>.</label></p></li>
-<li><p><label><input type="checkbox">There is a “Settings” link in a menu bar near the top of the repository homepage. Click it. Then, in the menu on the left, go down to “Pages”. In the page that appears …</label></p>
-<ol type="a">
-<li><p>Find the “branch” section. There is a button that will probably be labelled “none.” When you click on it, you will be offered some selections. Choose “main.”</p></li>
-<li><p>Next to the button from step (a), there will be a button with a file icon and that probably is labelled “/(root)”. Change this to say, “/docs”.</p></li>
-<li><p>Press the “Save” button next to the button that now says “/docs”.</p></li>
-</ol></li>
-</ul>
-<p>A message will say, “Your project has been published to GitHub pages.” There will be a URL that you can give your students to access the blog site on the web. It will look like this, but with your own user ID and repository name: <code>https://ProfessorSmith.github.io/Stat123</code></p>
-</section>
-<section id="congratulations" class="level2">
-<h2 class="anchored" data-anchor-id="congratulations">Congratulations!</h2>
-<p>You’re web site is set up (although it may take a few minutes to be accessible).</p>
-<p>Now you can create the documents that you want your students to see and deploy them to your site.</p>
-<!--
-
-## Back to RStudio
-
-- [ ] In the upper right corner of the RStudio window, there is a small dropdown menu. Select "New Project ..." then "Version Control" then "Git". The resulting pop-up window will have a text-entry field labelled "Repository URL." Paste into this field the URL you copied from the bright green button in GitHub. (This is "ProfessorSmith/Stats123.git" in our running example.) Then press "Create Project."
-
-- [ ] RStudio will reconfigure its window and you will be in the "Stats123" project you've just created. Now you have to tell RStudio what kind of project you want. 
-
-    - In the RStudio menu bar on your computer, go to "Build" then "Configure Build Tools".
-
-- [ ] Return to the repository home page. (e.g. ProfessorSmith/Stat123). One way to do this is by pressing the "<> Code" item in the menu bar near the top of the page.
-
-- [ ] One the home page is a bright green "<> Code" button that you saw earlier. Now we are going to use it. Click on it to open a popup labelled "clone." Make sure you are on the HTTPS tab in the popup. There will be a URL which contains your GitHub user name and the name of the repository. Something like "ProfessorSmith/Stats123.git". Copy that name to your browser. You are going to paste the name into RStudio in the next section.
-
-Your job is to add the third line. Spacing, spelling, and punctuation must not deviate from the above. Save the result.
-
-    - [ ] There is a bright green button on your repository homepage. We won't need this until later. What we need at this step is the "Add File" button. Use this to "Create new file." This will bring you to another page where you can create the file.
-    
-    - [ ] There is an editing pane on the "Create new file" page. Just above it is the name of your repository followed by a slash: Stat123/ in our running example. Next to this is a "name your file ..." text entry area. Insert "docs/temp.html". Make sure to use "docs/". Then type some fill in the edit pane, for instance, "It's a nice day." Then press the bright green "Commit changes ..." button. This will pop up a window where there is a "Commit changes" button. Press it.
-    
-    - The point of this step is merely to create a `docs/` directory in your repository. Using that name makes it easier to work with the RStudio tool set, as you will see later.
-
--->
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
