@@ -1,0 +1,199 @@
+---
+title: "Writing assignments with Web-R and `{devoirs}`"
+author: "Daniel Kaplan"
+date: "2024-06-04"
+categories: [LSTbook, computing, instructors]
+crossref:
+  custom:
+    - key: qst
+      kind: float
+      reference-prefix: "Question"
+# Enable webR
+webr:
+  channel-type: 'automatic'
+  packages: ['ggplot2', 'dplyr', 'LSTbook', 'ggformula', 'mosaicData', 'moderndive', 'palmerpenguins', 'babynames', 'knitr', 'rmarkdown', 'stringdist', 'mosaicData' ]
+filters:
+  - webr
+---
+
+```{r include=FALSE}
+library(devoirs)
+```
+
+The Quarto/webR system enables instructors to write .qmd -> HTML documents that contain interactive computing chunks that run in the student's browser, hence avoiding the need to support a web-service version of R such as `posit.cloud` or `shinyapps.io`.  
+
+Here's an example of such a chunk:
+
+```{webr-r}
+ggplot(mtcars, aes(x = wt, y = mpg, color = cyl)) +
+  geom_point()
+```
+
+For an instructor, one potential application of this run-R-in-the-browser capability is for home-work style assignments.
+
+The lightweight `{devoirs}` package ["*devoirs*" is French for "homework."]{.aside} lets you instrument the quarto->HTML file so that student work in Web-R can easily be submitted. 
+
+`{devoirs}` also provides responsive multiple-choice and essay questions formats that are straightforward to author and for which student answers can be collected. (The multiple-choice and essay formats are independent of Web-R and can be used in non-Web-R documents as well.)
+
+## Structure of the Quarto source document
+
+`{devoirs}` operates within an ordinary Quarto -> HTML file. Making use of `{devoirs}` involves placing three simple structured elements at the appropriate positions in the file.
+
+1. A chunk near the start of the document to load the `{devoirs}` library:
+
+```{r}
+#| echo: fenced
+library(devoirs)
+```
+
+2. A chunk (typically at near the start of the document) that provides the facility to collect the student answers in a format that can be pasted into whatever web-based collection facility you use. This example uses a Google Form, but instructors will want to create their own Google Form or other link for uploading homework answers.
+
+In addition to specifying an ID for the document and the the target URL, the chunk includes a call to `devoirs_start()`. This will create a small bit of HTML with a button, a link, and a display element reading, "No answers yet collected."
+     
+```{r}
+#| echo: fenced
+#| results: asis
+targetURL <- "https://docs.google.com/forms/d/e/1FAIpQLSevJgyHTRHm6_HVQqrYMd8wjMYifPknPLXtpVTunlWlO7RbMw/viewform?usp=pp_url"
+
+devoirs_start(documentID = "June 4 blog post",
+              collectURL = targetURL) 
+```
+
+ 
+
+A student wishing to submit answers will press the button. This will create a JSON string with the student's answers and copy it onto the computer clipboard. Then the student follows the link and pastes in the JSON string from the clipboard.
+
+3. At the end of the document (after any `{devoirs}` questions) a closing R chunk that provides the necessary javascript functionality to power the answer collection. 
+
+```{r echo=FALSE}
+# disable devoirs_end() temporarily
+tmp_end <- devoirs_end()
+devoirs_end <- function() {return(invisible(NULL))}
+```
+
+```{r}
+#| echo: fenced
+#| results: asis
+devoirs_end()
+```
+
+```{r echo=FALSE}
+# and re-enable it
+devoirs_end <- tmp_end
+```
+
+Place your questions and WebR chunks before the `devoirs_end()` marker. 
+
+## Multiple-choice question: Example
+
+Each multiple-choice question is placed in a chunk with the `mcq` engine. To be more precise, it is the answers choices that go in the `mcq` chunk. The question prompt goes before that chunk.
+
+Question prompt: What color is the blue moon? 
+
+Markup to provide three choices:
+
+     ``{mcq}
+     #| label: blue-moon
+     #| inline: true
+     #| show_hints: true
+     1. blue [hint: It's not blue!]
+     2. red $\sqrt{3}$
+     3. moon colored [correct]
+     ```
+     
+Output from the `mcq` chunk:
+
+```{mcq}
+#| label: blue-moon
+#| inline: true
+#| show_hints: true
+1. blue [hint: It's not blue!]
+2. red $\sqrt{3}$
+3. moon colored [correct hint: Admittedly silly, but ...]
+```
+
+There are two types of options used in the `mcq` chunk:
+
+1. YAML-formatted options as with ordinary R chunks in quarto. In the above example, there are three such YAML options:
+
+    i. `label:` which specifies the unique ID to be used for this multiple-choice question. Such an ID is required for every multiple-choice question.
+    
+    ii. `inline:` which causes the choices to be laid out horizontally. Leaving this option out, or setting it to `false` will put each choice on its own line.
+    
+    iii. `show_hints:` which, if `true` will display the hint associated with each individual choice. By default, the hints are set as nice ways of saying "no" for the choices not marked as correct, and something encouraging for the correct choice(s).
+    
+2. Options to be provided for the individual multiple-choice items within the `mcq` chunk.  
+
+Following the YAML, each choice item is placed on its own line. The line has three components:
+
+1. An index followed by a period. This is not part of the choice, but will be reported when the student answers are collected.
+2. The text for the choice. This can include LaTeX math markup.
+3. (Optionally) A pair of square braces containing information for that particular choice. 
+    a. A choice which is to be marked as correct will have the word `correct` as the lead-off item. 
+    b. Other options---as of this writing, there is only a custom `hint:` option---in a simple YAML-style syntax. If no hint is provided, one will be generated at random taking into account whether the choice is `[correct]` or not.
+
+## Essay question: Example
+
+Essay *answer fields* are generated with the `devoirs_text()` function. The argument is a unique ID to identify the field when the answers are collected and submitted. 
+
+```{r} 
+#| echo: fenced
+#| results: asis
+devoirs_text("Essay-1")
+```
+
+Note that this is a regular `{r}` chunk, as distinct from the `{mcq}` engine used in multiple-choice questions. 
+
+Typically, an author will place a prompt for the essay *before* the `devoirs_text()` chunk, using ordinary markdown syntax. I have not done that here.
+
+## WebR chunks
+
+Every WebR chunk is automatically included in the answer collection.
+
+## Action of collecting answers
+
+[Before reading the following, you may want to select one of the choices in the above multiple-choice question and write some little thing in the essay answer field.]
+
+When the student reaches the point where she wants to submit her answers, she presses the "Collect your answers" button near the top of the document. This has two distinct consequences.
+
+a. The "No answers yet collected" display changes into a summary of the answers provided by the student.
+
+b. A JSON-formatted string is copied to the clipboard.
+
+Pressing the button sets things up for the actual submission. The student will follow the "then paste them [here]()" link and paste the JSON-formatted string at the URL that's linked to. Note: The student must complete the pasting of the JSON for her answers to be submitted.
+
+For the answers that I provided when exercising this functionality, the JSON string was:
+
+```
+{"docid":"index.rmarkdown","MC":[{"itemid":"blue-moon-1","truth":"false","start":"blue"}],"Essays":[{"itemid":"Essay-1","contents":"When in the course of human events ..."}],"WebR":[{"chunk_id":0,"code":"ggplot(mtcars, aes(x = wt, y = mpg, color = cyl)) +\n  geom_point()"}]}
+```
+
+You can easily see my answers. Naturally, if you try this on your own you will see your own answers. For the WebR chunks, the answer reported will be the *code* in the chunk at the time "Collect your answers" was pressed.
+
+## Processing the submitted answers
+
+This will depend on how your target URL works. In this document, the target is a Google Form and the spreadsheet is at [] (I have set up my Google Form so that the spreadsheet can be read by following this [link](https://docs.google.com/spreadsheets/d/1w4HsxZaM3m40aQArBrkjFg08LXQ6ZPQ174IJuEL1mIs/edit?usp=sharing). Typically, an instructor would limit read access to the spreadsheet.) In such a situation, the processing will be:
+
+1. Go to the spreadsheet attached to the Google form and download it. Then read it into an R session as a data frame. Each student submission will have one JSON string containing the answer information.
+
+2. Use R data wrangling to filter the spreadsheet for the document ID you want to see the answers for.
+
+3. Collate the student answers to assign a score. 
+
+It's planned to provide as part of the `{devoirs}` package some resources for such wrangling and collating. But these don't yet exist.
+
+
+
+
+
+## Question IDs
+
+
+## At the end of the document
+
+This is where the `devoirs_end()` chunk should be placed.
+```{r} 
+#| echo: fenced
+#| results: asis
+devoirs_end()
+```
