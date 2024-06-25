@@ -1,0 +1,37 @@
+---
+title: "Decision-making in the Space Age"
+author: "Daniel Kaplan"
+date: "2024-06-25"
+categories: [bayes, subjective probability, NASA]
+---
+
+In the 1970s and 1980, following up on the successful moon-landing Apollo program of the 1960s, NASA embarked on a program to develop a space launch system called the "Space Shuttle" that would dramatically lower the cost per kilogram of placing objects into low-earth orbit. After many delays and massive cost overruns, the first Space Shuttle, Columbia, was launched on a manned test flight in April 1981.
+
+From 1985 through mid-January 1986, NASA's launch rate was 1 launch every 4 to 5 weeks, with some spaced by 3 weeks. This showed progress toward the promised one launch per week pace. NASA scheduled mission 25 to fly just two weeks after mission 24.
+
+Launching the shuttle was a risk-taking proposition. Several of the launches were close calls, some of them coming within a few seconds of disaster. One of the closest of these, in January 1985, produced severe internal damage to a critical joint in a solid-rocket booster. This problem was associated with the record-breaking cold weather in the days before launch. Plans were made to re-design the joint, but since the cold weather was a "one in one-hundred year" event, this was not an urgent concern.
+
+Mission 25 (officially STS-51-L) was launched on 28 January 1986. The weather in the days before and during launch was again record-breaking cold, substantially colder than the previous January 1985 record.
+
+For every flight, NASA conducted an intensive pre-flight safety review before giving the go for launch. Many scheduled launches were cancelled as the result of such reviews. 
+
+Adam Higginbotham's excellent 2024 book, *Challenger: A True Story of Heroism and Disaster on the Edge of Space* gives a detailed and up-close account of NASA decision making. Here, we look at a highly simplified, theoretical Bayesian decision-making process to see how it contrasts with the actual Mission-25 decision.
+
+An idealized decision-making process looks at the risks and benefits of the decision. But in reality, in many decisions such as that for Mission 25, only rough versions of such information are available. For Mission 25, it's safe to say, that the loss of the Shuttle and crew was valued much, much higher than the benefit of an on-schedule successful launch. In such situations, decision-makers tend to look at the probability of loss. A "go" decision is made only when this probability is very low.
+
+Publicists for NASA described the risk of catastrophic failure as "one in a million." This must be regarded as hyperbole; it's clearly absurd to base such a claim on the empirical basis of 24 successful launches. Any assessment of the risk on such limited evidence must be subjective. Here, we can consider the politics of the launch, as carefully described by Higginbotham. I think it reasonable, if subjective, to claim that if the risk had been (more realistically) claimed to be "one in a hundred," Mission 25 would never have been approved.
+
+For the Bayesian analysis, let's consider two, competing hypotheses. The first is "business as usual," that the risk for Mission 25 is no different than for other missions. The second hypothesis is "cold-weather conditions."
+
+For the business-as-usual hypothesis, the *likelihood* of a disaster is, as stipulated above, 0.01 or smaller. Under the cold-weather conditions hypothesis, the engineers who designed the solid-rocket booster thought a disaster was quite likely. We'll translate this into a numerical likelihood of 0.2.
+
+Under the business-as-usual hypothesis, a "go" decision was warranted. Under the cold-weather-conditions hypothesis, the decision would be "no go." Given the objectively observed record-breaking cold weather, the prior probability of the cold-weather-condition hypothethesis might be reconned at something like 0.25, that is, a prior odds of 0.33. You can see where this is heading ...
+
+The posterior odds of the cold-weather hypothesis can be calculated as the prior odds multiplied by the likelihood ratio. This gives:
+
+$$\underbrace{\frac{0.2}{0.01}}_\text{likelihood ratio} \underbrace{0.33}_\text{prior odds} = \underbrace{660}_\text{posterior odds} .$$
+
+This is extremely strong evidence for the cold-weather hypothesis, practically excluding the business-as-usual hypothesis. Consequently, the appropriate decision is "no go."
+
+Tragically, a "go" decision was made. The space shuttle Challenger exploded 73 seconds into its mission, killing all seven astronauts and leading to a two year hold on shuttle operations. Doubly tragic, the NASA decision-makers had been told about the cold-weather hypothesis. Their non-Bayesian decision-making processes did not include any comparison of hypotheses, so the wrong decision was made.
+
