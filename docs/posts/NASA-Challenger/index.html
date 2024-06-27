@@ -9,7 +9,7 @@
 <meta name="author" content="Daniel Kaplan">
 <meta name="dcterms.date" content="2024-06-25">
 
-<title>Instructor Blog for Lessons in Statistical Thinking - Decision-making in the Space Age</title>
+<title>Instructor Blog for Lessons in Statistical Thinking - Risk and Evidence in the Space Age</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -139,7 +139,7 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Decision-making in the Space Age</h1>
+      <h1 class="title">Risk and Evidence in the Space Age</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">bayes</div>
                 <div class="quarto-category">subjective probability</div>
@@ -181,21 +181,28 @@ window.Quarto = {
 
 
 <p>In the 1970s and 1980, following up on the successful moon-landing Apollo program of the 1960s, NASA embarked on a program to develop a space launch system called the “Space Shuttle” that would dramatically lower the cost per kilogram of placing objects into low-earth orbit. After many delays and massive cost overruns, the first Space Shuttle, Columbia, was launched on a manned test flight in April 1981.</p>
-<p>From 1985 through mid-January 1986, NASA’s launch rate was 1 launch every 4 to 5 weeks, with some spaced by 3 weeks. This showed progress toward the promised one launch per week pace. NASA scheduled mission 25 to fly just two weeks after mission 24.</p>
-<p>Launching the shuttle was a risk-taking proposition. Several of the launches were close calls, some of them coming within a few seconds of disaster. One of the closest of these, in January 1985, produced severe internal damage to a critical joint in a solid-rocket booster. This problem was associated with the record-breaking cold weather in the days before launch. Plans were made to re-design the joint, but since the cold weather was a “one in one-hundred year” event, this was not an urgent concern.</p>
-<p>Mission 25 (officially STS-51-L) was launched on 28 January 1986. The weather in the days before and during launch was again record-breaking cold, substantially colder than the previous January 1985 record.</p>
-<p>For every flight, NASA conducted an intensive pre-flight safety review before giving the go for launch. Many scheduled launches were cancelled as the result of such reviews.</p>
-<p>Adam Higginbotham’s excellent 2024 book, <em>Challenger: A True Story of Heroism and Disaster on the Edge of Space</em> gives a detailed and up-close account of NASA decision making. Here, we look at a highly simplified, theoretical Bayesian decision-making process to see how it contrasts with the actual Mission-25 decision.</p>
-<p>An idealized decision-making process looks at the risks and benefits of the decision. But in reality, in many decisions such as that for Mission 25, only rough versions of such information are available. For Mission 25, it’s safe to say, that the loss of the Shuttle and crew was valued much, much higher than the benefit of an on-schedule successful launch. In such situations, decision-makers tend to look at the probability of loss. A “go” decision is made only when this probability is very low.</p>
-<p>Publicists for NASA described the risk of catastrophic failure as “one in a million.” This must be regarded as hyperbole; it’s clearly absurd to base such a claim on the empirical basis of 24 successful launches. Any assessment of the risk on such limited evidence must be subjective. Here, we can consider the politics of the launch, as carefully described by Higginbotham. I think it reasonable, if subjective, to claim that if the risk had been (more realistically) claimed to be “one in a hundred,” Mission 25 would never have been approved.</p>
-<p>For the Bayesian analysis, let’s consider two, competing hypotheses. The first is “business as usual,” that the risk for Mission 25 is no different than for other missions. The second hypothesis is “cold-weather conditions.”</p>
-<p>For the business-as-usual hypothesis, the <em>likelihood</em> of a disaster is, as stipulated above, 0.01 or smaller. Under the cold-weather conditions hypothesis, the engineers who designed the solid-rocket booster thought a disaster was quite likely. We’ll translate this into a numerical likelihood of 0.2.</p>
-<p>Under the business-as-usual hypothesis, a “go” decision was warranted. Under the cold-weather-conditions hypothesis, the decision would be “no go.” Given the objectively observed record-breaking cold weather, the prior probability of the cold-weather-condition hypothethesis might be reconned at something like 0.25 or higher, that is, a prior odds of 0.33 or greater. You can see where this is heading …</p>
+<p>From 1985 through mid-January 1986, NASA’s launch rate was 1 launch every 4 to 5 weeks, with some separated by as little as 3 weeks. This showed progress toward the promised one launch per week pace. NASA scheduled mission 25 to fly just two weeks after mission 24.</p>
+<p>Launching the shuttle was a risky proposition. Adam Higginbotham’s excellent 2024 book, <em>Challenger: A True Story of Heroism and Disaster on the Edge of Space</em> gives a detailed and up-close account of NASA decision making. Several of the launches were close calls, some of them coming within a few seconds of disaster. One of the closest of these, in January 1985, produced severe internal damage to a critical joint in a solid-rocket booster. This problem was associated with the record-breaking cold weather in the days before launch. Plans were made to re-design the joint, but since the cold weather was a “one in one-hundred year” event, this was not an urgent concern.</p>
+<p>Upper management at the contractor that designed and built the solid-rocket booster, Morton-Thiocol, did not draw attention to the damage found after the 1985 flight, but internally added a new requirement for launch decisions: the temperature must be above 54 degrees.</p>
+<p>Mission 25 (officially STS-51-L) was launched on 28 January 1986. The weather in the days before and during launch was again record-breaking cold, at 28 degrees substantially colder than the previous January 1985 record.</p>
+<p>Before every flight, NASA conducted an intensive pre-flight safety review before giving the go for launch. Many scheduled launches had been cancelled as the result of such reviews. The Morton-Thiocol engineers, heeding the 54-degree criterion for launch, recommended a “no go” decision, but upper management overrode this, partly at the urging of NASA officials. Unfortunately,</p>
+<p>The space shuttle Challenger exploded 73 seconds into its mission, killing all seven astronauts.</p>
+<p>In the weeks after the explosion, NASA management, now aware of the cold-weather theory, instead insisted that the disaster was the result of an unknown but highly improbable technical failure. Was this a reasonable response based on the readily available data: the temperature at launch and the explosion itself?</p>
+<p>Publicists for NASA had described the risk of catastrophic failure as “one in a million.” This must be regarded as hyperbole; it’s clearly absurd to base such a claim on the empirical basis of 24 successful launches. NASA managers knew that the risk was higher. Any assessment of the risk on such limited evidence must be subjective. If the risk had been reckoned as one-in-a-hundred, Mission 25 would never have been proposed in the first place. For our purposes, then, suppose that the NASA managers’ intuition put the risk at 0.001 or lower.</p>
+<p>After the accident, should the managers have continued to believe in the 0.001 risk even after they knew about the cold-weather theory? We can approach this question using Bayesian inference.</p>
+<p>Consider two, competing hypotheses. The first is “business as usual,” that the risk for Mission 25 is no different than for other missions. The second hypothesis is “cold-weather risk.”</p>
+<p>For the business-as-usual hypothesis, the <em>likelihood</em> of a disaster is, as stipulated above, 0.001 or smaller. Under the cold-weather risk hypothesis, the engineers who designed the solid-rocket booster thought a disaster was quite likely. We’ll translate this into a numerical likelihood of 0.1.</p>
+<p>To complete the Bayesian calculation, we need to state the prior probability of the cold-weather-condition hypothethesis. However skeptical the NASA management might be about the cold-weather risk hypothesis, once they knew about the previous warnings from engineers and the internal Morton-Thiokol 54-degree launch criterion, a reasonable prior might be a probability of 0.10 (corresponding to odds of 0.11).</p>
+<p>Psychologically, the NASA managers would have had a hard time accepting the cold-weather-risk hypothesis. For people in their position, it’s tempting to interpret a probability for that hypothesis of 0.10 as meaning “not likely.” However, after the observation of the explosion, the prior probability needs to be updated.</p>
 <p>The posterior odds of the cold-weather hypothesis can be calculated as the prior odds multiplied by the likelihood ratio. This gives:</p>
-<p><span class="math display">\[\underbrace{\frac{0.2}{0.01}}_\text{likelihood ratio} \underbrace{0.33}_\text{prior odds} = \underbrace{6.6}_\text{posterior odds} .\]</span></p>
-<p>This is strong evidence for the cold-weather hypothesis, practically excluding the business-as-usual hypothesis. Consequently, the appropriate decision is “no go.”</p>
-<p>Naturally, the three numbers involved in this analysis, 0.2, 0.01, and 0.33, are all subjective. It’s worthwhile to explore the sensitivity of the outcome to changes in these numbers.</p>
-<p>Tragically, a “go” decision was made. The space shuttle Challenger exploded 73 seconds into its mission, killing all seven astronauts and leading to a two year hold on shuttle operations. Doubly tragic, the NASA decision-makers had been told about the cold-weather hypothesis. Their non-Bayesian decision-making processes did not include any comparison of hypotheses, so the wrong decision was made.</p>
+<p><span class="math display">\[\underbrace{\frac{0.1}{0.001}}_\text{likelihood ratio} \underbrace{0.11}_\text{prior odds} = \underbrace{11}_\text{posterior odds} .\]</span></p>
+<p>The posterior odds for the cold-weather hypothesis practically exclude the business-as-usual hypothesis.</p>
+<p>Discussion points:</p>
+<ul>
+<li><p>Suppose the launch of Mission 25 had been successful. Would the posterior odds for the cold-weather-theory be much different than the prior odds?</p></li>
+<li><p>Does a risk of 0.001 imply safety?</p></li>
+<li><p>Naturally, the three numbers involved in this analysis, 0.1, 0.001, and 0.11, are all subjective. Explore the sensitivity of the calculated posterior odds to changes in these numbers.</p></li>
+</ul>
 
 
 
